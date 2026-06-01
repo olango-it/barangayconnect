@@ -1,22 +1,28 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Calendar, Search, Tag } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
+import usePullToRefresh from "@/hooks/usePullToRefresh";
+import PullToRefreshIndicator from "@/components/PullToRefreshIndicator";
 
 const categories = ["All", "Announcement", "News", "Advisory", "Event", "Health", "Disaster", "General"];
 
 export default function News() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
+  const queryClient = useQueryClient();
 
   const { data: news = [], isLoading } = useQuery({
     queryKey: ["news-list"],
     queryFn: () => base44.entities.NewsArticle.filter({ is_published: true }, "-created_date"),
   });
+
+  const handleRefresh = () => queryClient.invalidateQueries({ queryKey: ["news-list"] });
+  const { pulling, pullDistance } = usePullToRefresh(handleRefresh);
 
   const filtered = news.filter((a) => {
     const matchSearch = !search || a.title?.toLowerCase().includes(search.toLowerCase());
@@ -26,6 +32,7 @@ export default function News() {
 
   return (
     <div>
+      <PullToRefreshIndicator pulling={pulling} pullDistance={pullDistance} />
       <section className="bg-primary text-primary-foreground py-16">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h1 className="font-heading text-3xl sm:text-4xl font-bold mb-3">News & Announcements</h1>

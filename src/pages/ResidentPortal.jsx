@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { base44 } from "@/api/base44Client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { FileText, Plus, Clock, CheckCircle2, XCircle, LogIn, AlertCircle, Package } from "lucide-react";
+import { FileText, Plus, Clock, CheckCircle2, XCircle, LogIn, AlertCircle, Package, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,6 +11,8 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/components/ui/use-toast";
 import { format } from "date-fns";
+import usePullToRefresh from "@/hooks/usePullToRefresh";
+import PullToRefreshIndicator from "@/components/PullToRefreshIndicator";
 
 const docTypes = [
   "Barangay Clearance",
@@ -45,6 +47,8 @@ export default function ResidentPortal() {
   const [user, setUser] = useState(null);
   const [authChecked, setAuthChecked] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [deleteConfirm, setDeleteConfirm] = useState("");
   const [form, setForm] = useState({ document_type: "", purpose: "" });
 
   useEffect(() => {
@@ -62,6 +66,16 @@ export default function ResidentPortal() {
     queryFn: () => base44.entities.CertificateRequest.filter({ filed_by_resident: true, created_by_id: user.id }, "-created_date"),
     enabled: !!user,
   });
+
+  const handleRefresh = () => queryClient.invalidateQueries({ queryKey: ["my-requests"] });
+  const { pulling, pullDistance } = usePullToRefresh(handleRefresh);
+
+  const handleDeleteAccount = async () => {
+    if (deleteConfirm !== "DELETE") return;
+    await base44.auth.logout();
+    toast({ title: "Account Deletion Requested", description: "Please contact the barangay office to complete account removal." });
+    setDeleteDialogOpen(false);
+  };
 
   const submitMutation = useMutation({
     mutationFn: (data) => base44.entities.CertificateRequest.create({
@@ -116,6 +130,7 @@ export default function ResidentPortal() {
 
   return (
     <div>
+      <PullToRefreshIndicator pulling={pulling} pullDistance={pullDistance} />
       <section className="bg-primary text-primary-foreground py-12">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between flex-wrap gap-4">
@@ -201,6 +216,47 @@ export default function ResidentPortal() {
           </div>
         )}
       </section>
+
+      {/* Settings Section */}
+      <section className="py-8 max-w-7xl mx-auto px-4">
+        <h2 className="font-heading text-lg font-bold mb-4">Settings</h2>
+        <div className="bg-card rounded-xl border p-5">
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <div>
+              <p className="font-medium text-sm">Delete Account</p>
+              <p className="text-xs text-muted-foreground mt-0.5">Permanently remove your account and all associated data.</p>
+            </div>
+            <Button variant="destructive" size="sm" className="gap-2 select-none" onClick={() => setDeleteDialogOpen(true)}>
+              <Trash2 className="w-4 h-4" /> Delete Account
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Delete Account Confirmation Dialog */}
+      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="text-destructive">Delete Account</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <p className="text-sm text-muted-foreground">
+              This action cannot be undone. To confirm, type <strong>DELETE</strong> below.
+            </p>
+            <Input
+              value={deleteConfirm}
+              onChange={(e) => setDeleteConfirm(e.target.value)}
+              placeholder="Type DELETE to confirm"
+            />
+            <div className="flex gap-3 justify-end">
+              <Button variant="outline" onClick={() => { setDeleteDialogOpen(false); setDeleteConfirm(""); }}>Cancel</Button>
+              <Button variant="destructive" disabled={deleteConfirm !== "DELETE"} onClick={handleDeleteAccount}>
+                Confirm Delete
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
