@@ -62,7 +62,7 @@ export default function HeroBanner() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="hidden lg:block"
+            className="hidden lg:flex flex-col gap-4"
           >
             <div className="relative">
               <div className="rounded-2xl overflow-hidden shadow-2xl w-full aspect-video">
@@ -80,6 +80,17 @@ export default function HeroBanner() {
                 <p className="text-2xl font-bold text-primary">10,000+</p>
                 <p className="text-xs text-muted-foreground">Residents Served</p>
               </div>
+            </div>
+            <div className="rounded-2xl overflow-hidden shadow-2xl w-full aspect-video mt-6">
+              <iframe
+                src="https://www.youtube.com/embed/RcJAd-mbKuk"
+                title="Barangay San Vicente Hym"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+                className="w-full h-full"
+              />
             </div>
           </motion.div>
         </div>
