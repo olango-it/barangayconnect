@@ -33,6 +33,7 @@ const staffNavItems = [
   { icon: Newspaper, label: "Latest News", path: "/admin/news" },
   { icon: Users, label: "Residents", path: "/admin/residents" },
   { icon: Calendar, label: "Events", path: "/admin/events" },
+  { icon: MessageSquare, label: "Messages", path: "/admin/messages" },
 ];
 
 export default function AdminLayout() {
