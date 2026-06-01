@@ -36,9 +36,21 @@ export default function About() {
           <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
             <h2 className="font-heading text-2xl font-bold mb-4">Our History</h2>
             <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
-              <p>Barangay San Vicente is one of the vibrant communities located in Olango Island, a beautiful coral island in the Cebu Strait, part of the Olango Island Group in Lapu-Lapu City, Cebu, Philippines.</p>
-              <p>Our barangay has a rich history rooted in the fishing traditions and cultural heritage of the Visayan people. Over the years, San Vicente has grown into a thriving community while preserving its natural beauty and cultural identity.</p>
-              <p>Today, Barangay San Vicente continues to develop its infrastructure, services, and tourism potential while maintaining the close-knit community spirit that defines island life.</p>
+              <p>Barangay San Vicente is one of the island barangays situated on Olango Island under the political jurisdiction of Lapu-Lapu City, Province of Cebu. Before becoming an independent barangay, the area was formerly known as Sitio Poo, a sitio under the jurisdiction of Barangay Santa Rosa. For many years, the community functioned as part of Barangay Santa Rosa, where residents shared social, economic, and cultural ties with neighboring communities on Olango Island.</p>
+              
+              <p>In 1995, Sitio Poo was officially established as an independent barangay and was named Barangay San Vicente, marking an important milestone in the history of the community. The creation of the barangay paved the way for stronger local governance, improved public services, and greater community participation in development initiatives aimed at uplifting the welfare of its residents.</p>
+              
+              <p>As part of the Olango Island group, Barangay San Vicente shares a long-standing history rooted in fishing traditions, coastal livelihood, and strong community cooperation that have shaped the identity of its people through generations. Historically, the community relied heavily on fishing, shell gathering, seaweed farming, and small-scale trading as primary sources of livelihood, contributing to the economic and cultural identity of the barangay.</p>
+              
+              <p>Barangay San Vicente is also known for its distinctive cultural celebration, the Baliw-Baliw Festival, a traditional religious and cultural festivity celebrated annually in honor of San Vicente Ferrer, the patron saint of the barangay. Held every month of May during the barangay fiesta celebration, the festival symbolizes faith, thanksgiving, unity, and cultural identity among residents. According to local tradition, the term "Baliw" is derived from the word "Pabaliw," a cultural expression associated with devotion, festive celebration, and thanksgiving.</p>
+              
+              <p>Barangay San Vicente is likewise recognized for being home to important ecological and environmental attractions, particularly the Olango Island Wildlife Sanctuary, one of the most significant wetland and migratory bird habitats in the Philippines. The sanctuary was declared a protected wildlife area in 1992 and later recognized as the first Ramsar Wetland Site of International Importance in the Philippines in 1994, emphasizing its global ecological significance.</p>
+              
+              <p>Another notable environmental asset is the San Vicente Marine Sanctuary, a protected coastal area established to preserve marine biodiversity and promote sustainable use of marine resources. The sanctuary serves as an important area for environmental education, community-based conservation, and livelihood support for fisherfolk and local stakeholders.</p>
+              
+              <p>Throughout the years, Barangay San Vicente gradually developed into a peaceful coastal community characterized by communal participation, social solidarity, and the preservation of local traditions. In recent years, the barangay has continued to uphold its identity as a vibrant island community while embracing sustainable development and environmental awareness.</p>
+              
+              <p>Today, Barangay San Vicente stands as a growing and progressive community committed to preserving its cultural heritage, strengthening local governance, promoting sustainable livelihood, and improving the well-being of its people while contributing to the continued growth and development of Olango Island and Lapu-Lapu City.</p>
             </div>
           </motion.div>
           <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
