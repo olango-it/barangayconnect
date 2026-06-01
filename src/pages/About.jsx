@@ -62,7 +62,7 @@ export default function About() {
               <h3 className="font-heading text-xl font-bold">Our Vision</h3>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              A progressive, peaceful, and self-reliant barangay where every resident enjoys a high quality of life, sustained by good governance, environmental stewardship, and community unity.
+              A community of healthy and happy people; cooperative and participative, yet remains to be self-reliant; living in a peaceful, progressive and environment-friendly neighborhood, that has affected change towards sustainable development in the city.
             </p>
           </div>
           <div className="bg-card p-8 rounded-2xl border shadow-sm">
