@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown, Phone } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -37,6 +39,12 @@ export default function PublicNavbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
 
+  const { data: settings = [] } = useQuery({
+    queryKey: ["admin-photos"],
+    queryFn: () => base44.entities.AdminSettings.filter({}),
+  });
+  const phone = settings.find((s) => s.setting_key === "phone_main")?.setting_value || "0917-XXX-XXXX";
+
   const isActive = (path) => location.pathname === path;
 
   return (
@@ -47,7 +55,7 @@ export default function PublicNavbar() {
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1">
               <Phone className="w-3 h-3" />
-              Emergency: 0917-XXX-XXXX
+              Emergency: {phone}
             </span>
           </div>
           <div className="hidden sm:flex items-center gap-3">

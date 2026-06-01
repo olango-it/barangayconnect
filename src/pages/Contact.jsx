@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -11,6 +12,13 @@ export default function Contact() {
   const { toast } = useToast();
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
   const [loading, setLoading] = useState(false);
+
+  const { data: settings = [] } = useQuery({
+    queryKey: ["admin-photos"],
+    queryFn: () => base44.entities.AdminSettings.filter({}),
+  });
+  const getSetting = (key, fallback) =>
+    settings.find((s) => s.setting_key === key)?.setting_value || fallback;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,9 +46,9 @@ export default function Contact() {
             <div className="space-y-4 mb-8">
               {[
                 { icon: MapPin, label: "Address", value: "Barangay Hall, San Vicente, Olango Island, Lapu-Lapu City, Cebu 6015" },
-                { icon: Phone, label: "Phone", value: "0917-XXX-XXXX" },
-                { icon: Mail, label: "Email", value: "brgy.sanvicente@gmail.com" },
-                { icon: Clock, label: "Office Hours", value: "Monday – Friday: 8:00 AM – 5:00 PM" },
+                { icon: Phone, label: "Phone", value: getSetting("phone_main", "0917-XXX-XXXX") },
+                { icon: Mail, label: "Email", value: getSetting("contact_email", "brgy.sanvicente@gmail.com") },
+                { icon: Clock, label: "Office Hours", value: getSetting("contact_hours", "Monday – Friday: 8:00 AM – 5:00 PM") },
               ].map((c) => (
                 <div key={c.label} className="flex items-start gap-4 p-4 bg-card rounded-xl border">
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">

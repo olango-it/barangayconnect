@@ -1,8 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail, Clock, Facebook } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { base44 } from "@/api/base44Client";
 
 export default function PublicFooter() {
+  const { data: settings = [] } = useQuery({
+    queryKey: ["admin-photos"],
+    queryFn: () => base44.entities.AdminSettings.filter({}),
+  });
+  const getSetting = (key, fallback) =>
+    settings.find((s) => s.setting_key === key)?.setting_value || fallback;
+
   return (
     <footer className="bg-primary text-primary-foreground">
       <div className="max-w-7xl mx-auto px-4 py-12">
@@ -61,15 +70,15 @@ export default function PublicFooter() {
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="w-4 h-4 shrink-0" />
-                <span>0917-XXX-XXXX</span>
+                <span>{getSetting("phone_main", "0917-XXX-XXXX")}</span>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="w-4 h-4 shrink-0" />
-                <span>brgy.sanvicente@gmail.com</span>
+                <span>{getSetting("contact_email", "brgy.sanvicente@gmail.com")}</span>
               </li>
               <li className="flex items-center gap-2">
                 <Clock className="w-4 h-4 shrink-0" />
-                <span>Mon–Fri: 8:00 AM – 5:00 PM</span>
+                <span>{getSetting("contact_hours", "Mon–Fri: 8:00 AM – 5:00 PM")}</span>
               </li>
             </ul>
           </div>

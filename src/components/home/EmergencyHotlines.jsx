@@ -1,14 +1,24 @@
 import React from "react";
 import { Phone, AlertTriangle, Flame, Shield, Heart } from "lucide-react";
-
-const hotlines = [
-  { icon: AlertTriangle, label: "Barangay Emergency", number: "0917-XXX-XXXX", color: "text-red-500 bg-red-50" },
-  { icon: Shield, label: "Police Station", number: "0917-XXX-XXXX", color: "text-blue-500 bg-blue-50" },
-  { icon: Flame, label: "Fire Department", number: "0917-XXX-XXXX", color: "text-orange-500 bg-orange-50" },
-  { icon: Heart, label: "Medical Emergency", number: "0917-XXX-XXXX", color: "text-green-500 bg-green-50" },
-];
+import { useQuery } from "@tanstack/react-query";
+import { base44 } from "@/api/base44Client";
 
 export default function EmergencyHotlines() {
+  const { data: settings = [] } = useQuery({
+    queryKey: ["admin-photos"],
+    queryFn: () => base44.entities.AdminSettings.filter({}),
+  });
+
+  const getSetting = (key, fallback) =>
+    settings.find((s) => s.setting_key === key)?.setting_value || fallback;
+
+  const hotlines = [
+    { icon: AlertTriangle, label: "Barangay Emergency", number: getSetting("phone_emergency", "0917-XXX-XXXX"), color: "text-red-500 bg-red-50" },
+    { icon: Shield, label: "Police Station", number: getSetting("phone_police", "0917-XXX-XXXX"), color: "text-blue-500 bg-blue-50" },
+    { icon: Flame, label: "Fire Department", number: getSetting("phone_fire", "0917-XXX-XXXX"), color: "text-orange-500 bg-orange-50" },
+    { icon: Heart, label: "Medical Emergency", number: getSetting("phone_medical", "0917-XXX-XXXX"), color: "text-green-500 bg-green-50" },
+  ];
+
   return (
     <section className="py-12 bg-red-50/50 border-y border-red-100">
       <div className="max-w-7xl mx-auto px-4">
