@@ -69,16 +69,7 @@ export default function AdminGate() {
         });
       } catch {}
 
-      const isAuth = await base44.auth.isAuthenticated();
-      if (isAuth) {
-        const user = await base44.auth.me();
-        const adminRoles = ["admin", "super_admin", "secretary", "records_officer", "front_desk"];
-        if (adminRoles.includes(user.role)) {
-          navigate("/admin/dashboard", { replace: true });
-          return;
-        }
-      }
-      navigate("/login", { replace: true });
+      navigate("/admin/dashboard", { replace: true });
     } else {
       const newAttempts = attempts + 1;
       setAttempts(newAttempts);
