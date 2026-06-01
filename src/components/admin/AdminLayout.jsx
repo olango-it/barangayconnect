@@ -19,12 +19,10 @@ const adminNavItems = [
   { icon: Download, label: "Documents", path: "/admin/documents" },
   { icon: MessageSquare, label: "Messages", path: "/admin/messages" },
   { icon: UserCog, label: "Staff", path: "/admin/staff" },
-  { icon: Activity, label: "Audit Log", path: "/admin/audit" },
-  { icon: Settings, label: "Settings", path: "/admin/settings" },
   { icon: MessageSquare, label: "Chat Dashboard", path: "/admin/chat" },
   { icon: HelpCircle, label: "FAQ Manager", path: "/admin/faq" },
   { icon: BookOpen, label: "Knowledge Base", path: "/admin/knowledge-base" },
-  { icon: Image, label: "Site Photos", path: "/admin/photos" },
+  { icon: Settings, label: "Site Settings", path: "/admin/photos" },
   { icon: MapPin, label: "Tourism", path: "/admin/tourism" },
   { icon: Music2, label: "Festival", path: "/admin/festival" },
 ];

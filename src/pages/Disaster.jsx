@@ -1,7 +1,9 @@
 import React from "react";
 import { AlertTriangle, Phone, MapPin, BookOpen, Shield } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { base44 } from "@/api/base44Client";
 
-const contacts = [
+const DEFAULT_CONTACTS = [
   { name: "Barangay Emergency Hotline", number: "0917-XXX-XXXX" },
   { name: "Municipal DRRMO", number: "0917-XXX-XXXX" },
   { name: "PNP Lapu-Lapu", number: "(032) XXX-XXXX" },
@@ -10,13 +12,34 @@ const contacts = [
   { name: "National Emergency Hotline", number: "911" },
 ];
 
-const guides = [
+const DEFAULT_CENTERS = [
+  "San Vicente Elementary School",
+  "Barangay Hall",
+  "San Vicente Chapel",
+];
+
+const DEFAULT_GUIDES = [
   { title: "Typhoon Preparedness", items: ["Secure your home and roof", "Store food and water for 3 days", "Keep flashlights and batteries ready", "Know your evacuation route", "Listen to official announcements"] },
   { title: "Earthquake Safety", items: ["Drop, Cover, and Hold On", "Stay away from glass and heavy objects", "Move to open area after shaking stops", "Check for injuries and damage", "Be prepared for aftershocks"] },
   { title: "Flood Preparedness", items: ["Know your area's flood risk", "Move to higher ground when warned", "Never walk through floodwaters", "Secure important documents", "Have emergency supplies ready"] },
 ];
 
+function parseSetting(settings, key, def) {
+  const s = settings.find((s) => s.setting_key === key);
+  try { return s ? JSON.parse(s.setting_value) : def; }
+  catch { return def; }
+}
+
 export default function Disaster() {
+  const { data: settings = [] } = useQuery({
+    queryKey: ["admin-photos"],
+    queryFn: () => base44.entities.AdminSettings.filter({}),
+  });
+
+  const contacts = parseSetting(settings, "disaster_contacts", DEFAULT_CONTACTS);
+  const centers = parseSetting(settings, "disaster_centers", DEFAULT_CENTERS);
+  const guides = parseSetting(settings, "disaster_guides", DEFAULT_GUIDES);
+
   return (
     <div>
       <section className="bg-red-700 text-white py-16">
@@ -33,9 +56,9 @@ export default function Disaster() {
           <Phone className="w-5 h-5 text-red-500" /> Emergency Contacts
         </h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {contacts.map((c) => (
+          {contacts.map((c, i) => (
             <a
-              key={c.name}
+              key={i}
               href={`tel:${c.number}`}
               className="flex items-center gap-3 p-4 bg-card rounded-xl border hover:shadow-md transition-shadow"
             >
@@ -58,8 +81,8 @@ export default function Disaster() {
             <MapPin className="w-5 h-5 text-blue-500" /> Evacuation Centers
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {["San Vicente Elementary School", "Barangay Hall", "San Vicente Chapel"].map((c) => (
-              <div key={c} className="flex items-center gap-3 p-4 bg-card rounded-xl border">
+            {centers.map((c, i) => (
+              <div key={i} className="flex items-center gap-3 p-4 bg-card rounded-xl border">
                 <Shield className="w-5 h-5 text-blue-500 shrink-0" />
                 <span className="text-sm font-medium">{c}</span>
               </div>
@@ -74,8 +97,8 @@ export default function Disaster() {
           <BookOpen className="w-5 h-5 text-green-500" /> Preparedness Guides
         </h2>
         <div className="grid md:grid-cols-3 gap-6">
-          {guides.map((g) => (
-            <div key={g.title} className="bg-card rounded-xl border p-6">
+          {guides.map((g, gi) => (
+            <div key={gi} className="bg-card rounded-xl border p-6">
               <h3 className="font-heading font-semibold text-lg mb-4">{g.title}</h3>
               <ul className="space-y-2">
                 {g.items.map((item, i) => (

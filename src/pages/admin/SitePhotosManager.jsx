@@ -6,7 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Save, Image, Loader2, Phone } from "lucide-react";
+import { Save, Image, Loader2, Phone, AlertTriangle } from "lucide-react";
+import DisasterSettings from "@/components/admin/DisasterSettings";
 import { useToast } from "@/components/ui/use-toast";
 
 const PHOTO_KEYS = [
@@ -87,13 +88,14 @@ export default function SitePhotosManager() {
     <div className="p-6 max-w-4xl mx-auto">
       <div className="mb-6">
         <h1 className="text-2xl font-heading font-bold">Site Settings</h1>
-        <p className="text-sm text-muted-foreground mt-1">Manage photos and contact information shown on the public website.</p>
+        <p className="text-sm text-muted-foreground mt-1">Manage photos, contact info, and disaster preparedness content for the public website.</p>
       </div>
 
       <Tabs defaultValue="photos">
         <TabsList className="mb-6">
           <TabsTrigger value="photos" className="gap-2"><Image className="w-4 h-4" />Photos</TabsTrigger>
           <TabsTrigger value="contact" className="gap-2"><Phone className="w-4 h-4" />Contact Info</TabsTrigger>
+          <TabsTrigger value="disaster" className="gap-2"><AlertTriangle className="w-4 h-4" />Disaster Preparedness</TabsTrigger>
         </TabsList>
 
         {/* PHOTOS TAB */}
@@ -178,6 +180,10 @@ export default function SitePhotosManager() {
               </div>
             </CardContent>
           </Card>
+        </TabsContent>
+        {/* DISASTER TAB */}
+        <TabsContent value="disaster">
+          <DisasterSettings />
         </TabsContent>
       </Tabs>
     </div>
