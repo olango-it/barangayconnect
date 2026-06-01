@@ -65,7 +65,7 @@ export default function Contact() {
             {/* Map */}
             <div className="rounded-xl overflow-hidden border h-64">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15700.52!2d123.99!3d10.27!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTDCsDE2JzEyLjAiTiAxMjPCsDU5JzI0LjAiRQ!5e0!3m2!1sen!2sph!4v1"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1d3000!2d124.0325!3d10.2583!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTDCsDE1JzI5LjkiTiAxMjTCsDAyJzU3LjAiRQ!5e0!3m2!1sen!2sph!4v1"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
