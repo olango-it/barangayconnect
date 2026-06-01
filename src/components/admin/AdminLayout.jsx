@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const navItems = [
+const adminNavItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/admin/dashboard" },
   { icon: Users, label: "Residents", path: "/admin/residents" },
   { icon: FileText, label: "Certificates", path: "/admin/certificates" },
@@ -24,6 +24,11 @@ const navItems = [
   { icon: MessageSquare, label: "Chat Dashboard", path: "/admin/chat" },
   { icon: HelpCircle, label: "FAQ Manager", path: "/admin/faq" },
   { icon: BookOpen, label: "Knowledge Base", path: "/admin/knowledge-base" },
+];
+
+const staffNavItems = [
+  { icon: FileText, label: "Certificates", path: "/admin/certificates" },
+  { icon: ClipboardList, label: "Requests", path: "/admin/requests" },
 ];
 
 export default function AdminLayout() {
@@ -43,26 +48,19 @@ export default function AdminLayout() {
   }, []);
 
   const checkAuth = async () => {
-    const isAuth = await base44.auth.isAuthenticated();
-    if (!isAuth) {
-      // PIN-verified admins don't need to be logged in
+    const adminRole = sessionStorage.getItem("admin_role");
+    if (adminRole === "staff") {
+      setUser({ full_name: "Staff", role: "staff" });
+    } else {
       setUser({ full_name: "Admin", role: "admin" });
-      setChecking(false);
-      return;
     }
-    const me = await base44.auth.me();
-    const adminRoles = ["admin", "super_admin", "secretary", "records_officer", "front_desk"];
-    if (!adminRoles.includes(me.role)) {
-      navigate("/", { replace: true });
-      return;
-    }
-    setUser(me);
     setChecking(false);
   };
 
   const handleLogout = () => {
     sessionStorage.removeItem("admin_pin_verified");
-    base44.auth.logout("/");
+    sessionStorage.removeItem("admin_role");
+    navigate("/admin", { replace: true });
   };
 
   if (checking) {
@@ -73,9 +71,7 @@ export default function AdminLayout() {
     );
   }
 
-  const filteredNav = navItems.filter(
-    (item) => !item.roles || item.roles.includes(user?.role)
-  );
+  const filteredNav = user?.role === "staff" ? staffNavItems : adminNavItems;
 
   return (
     <div className="min-h-screen bg-muted/30 flex">
@@ -120,8 +116,8 @@ export default function AdminLayout() {
               {user?.full_name?.[0] || "A"}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-medium truncate">{user?.full_name}</p>
-              <p className="text-[10px] opacity-60 capitalize">{user?.role?.replace("_", " ")}</p>
+              <p className="text-xs font-medium truncate">{user?.role === "staff" ? "Staff_SanVicente" : "AdminCarlo"}</p>
+              <p className="text-[10px] opacity-60 capitalize">{user?.role === "staff" ? "Staff" : "Administrator"}</p>
             </div>
           </div>
           <Button variant="ghost" size="sm" className="w-full justify-start gap-2 text-sidebar-foreground/70 hover:text-sidebar-foreground" onClick={handleLogout}>

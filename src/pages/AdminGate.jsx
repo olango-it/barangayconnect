@@ -55,6 +55,7 @@ export default function AdminGate() {
 
     if (adminUser === ADMIN_USERNAME && adminPass === ADMIN_PASSWORD) {
       sessionStorage.setItem("admin_pin_verified", "true");
+      sessionStorage.setItem("admin_role", "admin");
       try {
         await base44.entities.AuditLog.create({
           action: "Admin Login",
@@ -92,6 +93,7 @@ export default function AdminGate() {
 
     if (staffUser === STAFF_USERNAME && staffPass === STAFF_PASSWORD) {
       sessionStorage.setItem("admin_pin_verified", "true");
+      sessionStorage.setItem("admin_role", "staff");
       try {
         await base44.entities.AuditLog.create({
           action: "Staff Login",
