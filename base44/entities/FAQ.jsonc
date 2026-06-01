@@ -1,0 +1,42 @@
+{
+  "name": "FAQ",
+  "type": "object",
+  "properties": {
+    "question": {
+      "type": "string"
+    },
+    "answer": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Barangay Clearance",
+        "Sertipiko sa Pagpuyo",
+        "Sertipiko sa Kawang",
+        "Business Clearance",
+        "Cedula",
+        "Barangay Permits",
+        "Oras sa Opisina",
+        "Kontak",
+        "Mga Opisyal",
+        "Mga Programa",
+        "Emergency",
+        "General"
+      ]
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "order": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "question",
+    "answer",
+    "category"
+  ]
+}

@@ -4,7 +4,7 @@ import { base44 } from "@/api/base44Client";
 import {
   LayoutDashboard, Users, FileText, Newspaper, Calendar, Image,
   Building2, Download, Settings, Menu, X, LogOut, ChevronDown,
-  Shield, ClipboardList, MessageSquare, Activity, UserCog
+  Shield, ClipboardList, MessageSquare, Activity, UserCog, HelpCircle, BookOpen
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -21,6 +21,9 @@ const navItems = [
   { icon: UserCog, label: "Staff", path: "/admin/staff", roles: ["admin", "super_admin"] },
   { icon: Activity, label: "Audit Log", path: "/admin/audit", roles: ["admin", "super_admin"] },
   { icon: Settings, label: "Settings", path: "/admin/settings", roles: ["admin", "super_admin"] },
+  { icon: MessageSquare, label: "Chat Dashboard", path: "/admin/chat" },
+  { icon: HelpCircle, label: "FAQ Manager", path: "/admin/faq" },
+  { icon: BookOpen, label: "Knowledge Base", path: "/admin/knowledge-base" },
 ];
 
 export default function AdminLayout() {

@@ -1,0 +1,30 @@
+{
+  "name": "ChatHistory",
+  "type": "object",
+  "properties": {
+    "session_id": {
+      "type": "string"
+    },
+    "visitor_name": {
+      "type": "string"
+    },
+    "question": {
+      "type": "string"
+    },
+    "answer": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "user_agent": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "session_id",
+    "question",
+    "answer"
+  ]
+}

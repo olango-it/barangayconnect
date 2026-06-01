@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import PublicNavbar from "./PublicNavbar";
 import PublicFooter from "./PublicFooter";
+import ChatWidget from "@/components/chatbot/ChatWidget";
 
 export default function PublicLayout() {
   return (
@@ -11,6 +12,7 @@ export default function PublicLayout() {
         <Outlet />
       </main>
       <PublicFooter />
+      <ChatWidget />
     </div>
   );
 }

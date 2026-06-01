@@ -1,0 +1,32 @@
+{
+  "name": "KnowledgeBase",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Policy",
+        "Procedure",
+        "Requirements",
+        "Announcement",
+        "Event",
+        "General"
+      ]
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "title",
+    "content",
+    "category"
+  ]
+}
