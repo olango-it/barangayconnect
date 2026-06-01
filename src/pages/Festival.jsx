@@ -168,24 +168,7 @@ export default function Festival() {
           </div>
         </section>
 
-        {/* Gallery */}
-        {images.length > 0 && (
-          <section>
-            <h2 className="font-heading text-2xl font-bold mb-4">Photo Gallery</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {images.map((img) => (
-                <motion.div
-                  key={img.id}
-                  whileHover={{ scale: 1.02 }}
-                  className="rounded-xl overflow-hidden cursor-pointer aspect-square"
-                  onClick={() => setLightbox(img)}
-                >
-                  <img src={img.image_url} alt={img.caption || "Festival photo"} className="w-full h-full object-cover" />
-                </motion.div>
-              ))}
-            </div>
-          </section>
-        )}
+
       </div>
 
       {/* Lightbox */}
