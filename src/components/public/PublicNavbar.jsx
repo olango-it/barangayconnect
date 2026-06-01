@@ -24,6 +24,7 @@ const navLinks = [
       { label: "News & Announcements", path: "/news" },
       { label: "Events", path: "/events" },
       { label: "Disaster Preparedness", path: "/disaster" },
+      { label: "Contact", path: "/contact" },
     ],
   },
   {
@@ -33,7 +34,6 @@ const navLinks = [
       { label: "Downloads", path: "/downloads" },
     ],
   },
-  { label: "Contact", path: "/contact" },
 ];
 
 export default function PublicNavbar() {
