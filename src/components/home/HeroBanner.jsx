@@ -76,10 +76,7 @@ export default function HeroBanner() {
                   className="w-full h-full"
                 />
               </div>
-              <div className="absolute -bottom-6 -left-6 bg-white text-foreground p-4 rounded-xl shadow-lg">
-                <p className="text-2xl font-bold text-primary">10,000+</p>
-                <p className="text-xs text-muted-foreground">Residents Served</p>
-              </div>
+
             </div>
             <div className="rounded-2xl overflow-hidden shadow-2xl w-full aspect-video mt-6">
               <iframe
