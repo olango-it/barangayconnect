@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 
 const SESSION_ID = "session_" + Math.random().toString(36).substr(2, 9);
 
-const SYSTEM_PROMPT = `Ikaw si "San Vicente Virtual Assistant", ang opisyal nga virtual assistant sa Barangay San Vicente, Olango Island.
+const SYSTEM_PROMPT = `Ikaw si "VINCE" (Virtual Intelligence for the Community of San Vicente), ang opisyal nga virtual assistant sa Barangay San Vicente, Olango Island.
 
 IMPORTANTE NGA MGA LAGDA:
 1. KANUNAY mosulti SA CEBUANO/BISAYA lamang. Dili gayud mosulti og English.
@@ -34,7 +34,7 @@ export default function ChatWidget() {
   const [open, setOpen] = useState(false);
   const [minimized, setMinimized] = useState(false);
   const [messages, setMessages] = useState([
-    { role: "assistant", text: "Maayong adlaw! Welcome sa Barangay San Vicente. Unsa akong ikatabang kanimo karon?" }
+    { role: "assistant", text: "Maayong adlaw! Ako si VINCE, ang Virtual Assistant sa Barangay San Vicente. Unsa akong ikatabang kanimo karon?" }
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -125,7 +125,7 @@ Assistant (tubaga sa Bisaya):`;
             <Bot className="w-4 h-4" />
           </div>
           <div>
-            <p className="font-semibold text-sm leading-tight">San Vicente Virtual Assistant</p>
+            <p className="font-semibold text-sm leading-tight">VINCE</p>
             <div className="flex items-center gap-1">
               <span className="w-2 h-2 bg-green-400 rounded-full" />
               <p className="text-xs text-white/80">Online ang Virtual Assistant</p>
