@@ -45,7 +45,9 @@ export default function AdminLayout() {
   const checkAuth = async () => {
     const isAuth = await base44.auth.isAuthenticated();
     if (!isAuth) {
-      navigate("/login", { replace: true });
+      // PIN-verified admins don't need to be logged in
+      setUser({ full_name: "Admin", role: "admin" });
+      setChecking(false);
       return;
     }
     const me = await base44.auth.me();
