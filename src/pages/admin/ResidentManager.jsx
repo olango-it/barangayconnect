@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Search, Plus, Edit2, Users, X } from "lucide-react";
+import { Search, Plus, Edit2, Users, Upload, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -15,6 +15,7 @@ const emptyResident = {
   date_of_birth: "", gender: "", civil_status: "", address: "",
   purok_sitio: "", contact_number: "", email: "", occupation: "",
   household_number: "", remarks: "", status: "Active",
+  photo_url: "", valid_id_front: "", valid_id_back: "",
 };
 
 export default function ResidentManager() {
@@ -24,6 +25,15 @@ export default function ResidentManager() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [form, setForm] = useState(emptyResident);
   const [editId, setEditId] = useState(null);
+  const [uploading, setUploading] = useState({});
+
+  const handleUpload = async (field, file) => {
+    if (!file) return;
+    setUploading((prev) => ({ ...prev, [field]: true }));
+    const { file_url } = await base44.integrations.Core.UploadFile({ file });
+    setForm((prev) => ({ ...prev, [field]: file_url }));
+    setUploading((prev) => ({ ...prev, [field]: false }));
+  };
 
   const { data: residents = [], isLoading } = useQuery({
     queryKey: ["admin-residents"],
@@ -152,6 +162,28 @@ export default function ResidentManager() {
               <div><Label>Household Number</Label><Input value={form.household_number} onChange={(e) => setForm({ ...form, household_number: e.target.value })} /></div>
               <div><Label>Occupation</Label><Input value={form.occupation} onChange={(e) => setForm({ ...form, occupation: e.target.value })} /></div>
               <div><Label>Email</Label><Input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></div>
+            </div>
+            {/* Photo Uploads */}
+            <div className="col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 border-t">
+              {[
+                { field: "photo_url", label: "2x2 Picture" },
+                { field: "valid_id_front", label: "Valid ID (Front)" },
+                { field: "valid_id_back", label: "Valid ID (Back)" },
+              ].map(({ field, label }) => (
+                <div key={field}>
+                  <Label>{label}</Label>
+                  <div className="mt-1 flex flex-col gap-2">
+                    {form[field] && (
+                      <img src={form[field]} alt={label} className="w-full h-24 object-cover rounded-lg border" />
+                    )}
+                    <label className="flex items-center justify-center gap-2 border border-dashed rounded-lg p-3 cursor-pointer hover:bg-muted/50 text-sm text-muted-foreground">
+                      {uploading[field] ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+                      {uploading[field] ? "Uploading..." : "Upload"}
+                      <input type="file" accept="image/*" className="hidden" onChange={(e) => handleUpload(field, e.target.files[0])} />
+                    </label>
+                  </div>
+                </div>
+              ))}
             </div>
             <div><Label>Remarks</Label><Input value={form.remarks} onChange={(e) => setForm({ ...form, remarks: e.target.value })} /></div>
             <div className="flex justify-end gap-3">

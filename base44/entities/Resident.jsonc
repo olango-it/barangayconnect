@@ -73,7 +73,16 @@
       ]
     },
     "photo_url": {
-      "type": "string"
+      "type": "string",
+      "description": "2x2 picture URL"
+    },
+    "valid_id_front": {
+      "type": "string",
+      "description": "Valid ID front image URL"
+    },
+    "valid_id_back": {
+      "type": "string",
+      "description": "Valid ID back image URL"
     },
     "remarks": {
       "type": "string"
