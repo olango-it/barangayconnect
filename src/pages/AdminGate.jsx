@@ -6,7 +6,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 
-const DEFAULT_PIN = "553752";
+const ADMIN_USERNAME = "AdminCarlo";
+const ADMIN_PASSWORD = "553752";
+const STAFF_USERNAME = "Staff_SanVicente";
+const STAFF_PASSWORD = "KapEdil2025";
 
 export default function AdminGate() {
   const navigate = useNavigate();
@@ -14,14 +17,15 @@ export default function AdminGate() {
 
   const [mode, setMode] = useState("admin"); // "admin" | "staff"
 
-  // Admin PIN state
-  const [pin, setPin] = useState("");
+  // Admin login state
+  const [adminUser, setAdminUser] = useState("");
+  const [adminPass, setAdminPass] = useState("");
   const [attempts, setAttempts] = useState(0);
   const [locked, setLocked] = useState(false);
 
   // Staff login state
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [staffUser, setStaffUser] = useState("");
+  const [staffPass, setStaffPass] = useState("");
   const [loggingIn, setLoggingIn] = useState(false);
 
   const [checking, setChecking] = useState(true);
@@ -36,47 +40,36 @@ export default function AdminGate() {
   }, []);
 
   const checkUserRole = async () => {
-    const isAuth = await base44.auth.isAuthenticated();
-    if (isAuth) {
-      const user = await base44.auth.me();
-      const adminRoles = ["admin", "super_admin", "secretary", "records_officer", "front_desk"];
-      if (adminRoles.includes(user.role)) {
-        navigate("/admin/dashboard", { replace: true });
-        return;
-      }
+    const pinVerified = sessionStorage.getItem("admin_pin_verified");
+    if (pinVerified === "true") {
+      navigate("/admin/dashboard", { replace: true });
+      return;
     }
     setChecking(false);
   };
 
-  // --- Admin PIN ---
-  const handlePinSubmit = async (e) => {
+  // --- Admin Login ---
+  const handleAdminLogin = async (e) => {
     e.preventDefault();
     if (locked) return;
 
-    let correctPin = DEFAULT_PIN;
-    try {
-      const settings = await base44.entities.AdminSettings.filter({ setting_key: "admin_pin" });
-      if (settings.length > 0) correctPin = settings[0].setting_value;
-    } catch {}
-
-    if (pin === correctPin) {
+    if (adminUser === ADMIN_USERNAME && adminPass === ADMIN_PASSWORD) {
       sessionStorage.setItem("admin_pin_verified", "true");
       try {
         await base44.entities.AuditLog.create({
-          action: "Admin PIN Verified",
-          details: "Successful PIN entry",
+          action: "Admin Login",
+          details: `Admin login: ${adminUser}`,
           timestamp: new Date().toISOString(),
         });
       } catch {}
-
       navigate("/admin/dashboard", { replace: true });
     } else {
       const newAttempts = attempts + 1;
       setAttempts(newAttempts);
       try {
         await base44.entities.AuditLog.create({
-          action: "Admin PIN Failed",
-          details: `Failed PIN attempt #${newAttempts}`,
+          action: "Admin Login Failed",
+          details: `Failed admin login attempt #${newAttempts} for: ${adminUser}`,
           timestamp: new Date().toISOString(),
         });
       } catch {}
@@ -86,9 +79,9 @@ export default function AdminGate() {
         toast({ title: "Access Locked", description: "Too many failed attempts. Please wait 5 minutes.", variant: "destructive" });
         setTimeout(() => { setLocked(false); setAttempts(0); }, 300000);
       } else {
-        toast({ title: "Access Denied", description: `Incorrect PIN. ${5 - newAttempts} attempts remaining.`, variant: "destructive" });
+        toast({ title: "Access Denied", description: `Incorrect credentials. ${5 - newAttempts} attempts remaining.`, variant: "destructive" });
       }
-      setPin("");
+      setAdminPass("");
     }
   };
 
@@ -96,21 +89,21 @@ export default function AdminGate() {
   const handleStaffLogin = async (e) => {
     e.preventDefault();
     setLoggingIn(true);
-    try {
-      await base44.auth.loginViaEmailPassword(email, password);
+
+    if (staffUser === STAFF_USERNAME && staffPass === STAFF_PASSWORD) {
       sessionStorage.setItem("admin_pin_verified", "true");
       try {
         await base44.entities.AuditLog.create({
           action: "Staff Login",
-          details: `Staff login: ${email}`,
+          details: `Staff login: ${staffUser}`,
           timestamp: new Date().toISOString(),
         });
       } catch {}
-      window.location.href = "/admin/dashboard";
-    } catch {
+      navigate("/admin/dashboard", { replace: true });
+    } else {
       toast({ title: "Login Failed", description: "Invalid username or password.", variant: "destructive" });
-      setLoggingIn(false);
     }
+    setLoggingIn(false);
   };
 
   if (checking) {
@@ -150,10 +143,10 @@ export default function AdminGate() {
             </button>
           </div>
 
-          {/* Admin PIN Mode */}
+          {/* Admin Login Mode */}
           {mode === "admin" && (
             <>
-              <p className="text-xs text-center text-muted-foreground mb-4">Enter the admin PIN to continue</p>
+              <p className="text-xs text-center text-muted-foreground mb-4">Sign in with your admin credentials</p>
               {locked ? (
                 <div className="text-center py-6">
                   <AlertTriangle className="w-10 h-10 text-destructive mx-auto mb-3" />
@@ -161,22 +154,33 @@ export default function AdminGate() {
                   <p className="text-xs text-muted-foreground mt-1">Too many failed attempts. Please wait 5 minutes.</p>
                 </div>
               ) : (
-                <form onSubmit={handlePinSubmit} className="space-y-4">
+                <form onSubmit={handleAdminLogin} className="space-y-4">
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Input
+                      type="text"
+                      placeholder="Username"
+                      value={adminUser}
+                      onChange={(e) => setAdminUser(e.target.value)}
+                      className="pl-10"
+                      required
+                      autoFocus
+                    />
+                  </div>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                     <Input
                       type="password"
-                      placeholder="Enter PIN"
-                      value={pin}
-                      onChange={(e) => setPin(e.target.value)}
-                      className="pl-10 text-center text-lg tracking-[0.5em]"
-                      maxLength={10}
-                      autoFocus
+                      placeholder="Password"
+                      value={adminPass}
+                      onChange={(e) => setAdminPass(e.target.value)}
+                      className="pl-10"
+                      required
                     />
                   </div>
                   <Button type="submit" className="w-full gap-2">
                     <Shield className="w-4 h-4" />
-                    Verify PIN
+                    Sign In as Admin
                   </Button>
                 </form>
               )}
@@ -191,10 +195,10 @@ export default function AdminGate() {
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <Input
-                    type="email"
-                    placeholder="Email / Username"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    type="text"
+                    placeholder="Username"
+                    value={staffUser}
+                    onChange={(e) => setStaffUser(e.target.value)}
                     className="pl-10"
                     required
                     autoFocus
@@ -205,15 +209,15 @@ export default function AdminGate() {
                   <Input
                     type="password"
                     placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={staffPass}
+                    onChange={(e) => setStaffPass(e.target.value)}
                     className="pl-10"
                     required
                   />
                 </div>
                 <Button type="submit" className="w-full gap-2" disabled={loggingIn}>
                   <KeyRound className="w-4 h-4" />
-                  {loggingIn ? "Signing In..." : "Sign In"}
+                  {loggingIn ? "Signing In..." : "Sign In as Staff"}
                 </Button>
               </form>
             </>
