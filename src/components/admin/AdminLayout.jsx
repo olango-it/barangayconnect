@@ -4,7 +4,7 @@ import { base44 } from "@/api/base44Client";
 import {
   LayoutDashboard, Users, FileText, Newspaper, Calendar, Image,
   Building2, Download, Settings, Menu, X, LogOut, ChevronDown,
-  Shield, ClipboardList, MessageSquare, Activity, UserCog, HelpCircle, BookOpen
+  Shield, ClipboardList, MessageSquare, Activity, UserCog, HelpCircle, BookOpen, MapPin
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -25,6 +25,7 @@ const adminNavItems = [
   { icon: HelpCircle, label: "FAQ Manager", path: "/admin/faq" },
   { icon: BookOpen, label: "Knowledge Base", path: "/admin/knowledge-base" },
   { icon: Image, label: "Site Photos", path: "/admin/photos" },
+  { icon: MapPin, label: "Tourism", path: "/admin/tourism" },
 ];
 
 const staffNavItems = [

@@ -1,33 +1,18 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { MapPin, Fish, Waves, Camera, Sun } from "lucide-react";
+import { Sun, ExternalLink } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 
-const DEFAULT_IMAGES = [
-  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&h=400&fit=crop",
-  "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=600&h=400&fit=crop",
-];
-
-const ATTRACTION_META = [
-  { title: "Olango Island Wildlife Sanctuary", desc: "A protected area and Ramsar Wetland Site, home to migratory birds from Siberia, China, and Japan. One of the best birdwatching destinations in the Philippines.", icon: Fish },
-  { title: "Beautiful Beaches", desc: "Pristine white sand beaches with crystal clear waters perfect for swimming, snorkeling, and relaxation.", icon: Waves },
-  { title: "Marine Sanctuaries", desc: "Protected marine areas with diverse coral reefs and marine life ideal for diving and eco-tourism.", icon: Fish },
-  { title: "Local Culture & Heritage", desc: "Experience the rich Visayan culture, local festivals, traditional fishing practices, and warm island hospitality.", icon: Camera },
-];
-
 export default function Tourism() {
-  const { data: settings = [] } = useQuery({
-    queryKey: ["admin-photos"],
-    queryFn: () => base44.entities.AdminSettings.filter({}),
+  const { data: spots = [], isLoading } = useQuery({
+    queryKey: ["tourist-spots-public"],
+    queryFn: () => base44.entities.TouristSpot.filter({ is_active: true }, "order"),
   });
 
-  const attractions = ATTRACTION_META.map((meta, i) => ({
-    ...meta,
-    image: settings.find((s) => s.setting_key === `photo_tourism_${i + 1}`)?.setting_value || DEFAULT_IMAGES[i],
-  }));
+  const handleCardClick = (id) => {
+    window.open(`/tourism/${id}`, "_blank");
+  };
 
   return (
     <div>
@@ -50,29 +35,52 @@ export default function Tourism() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          {attractions.map((a, i) => (
-            <motion.div
-              key={a.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              viewport={{ once: true }}
-              className="bg-card rounded-2xl border overflow-hidden hover:shadow-lg transition-shadow group"
-            >
-              <div className="h-56 overflow-hidden">
-                <img src={a.image} alt={a.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-              </div>
-              <div className="p-6">
-                <div className="flex items-center gap-2 mb-2">
-                  <a.icon className="w-5 h-5 text-secondary" />
-                  <h3 className="font-heading font-bold text-lg">{a.title}</h3>
+        {isLoading ? (
+          <div className="grid md:grid-cols-2 gap-8">
+            {[1,2,3,4].map((i) => (
+              <div key={i} className="bg-card rounded-2xl border overflow-hidden animate-pulse">
+                <div className="h-56 bg-muted" />
+                <div className="p-6 space-y-2">
+                  <div className="h-4 bg-muted rounded w-2/3" />
+                  <div className="h-3 bg-muted rounded w-full" />
                 </div>
-                <p className="text-sm text-muted-foreground">{a.desc}</p>
               </div>
-            </motion.div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : spots.length === 0 ? (
+          <p className="text-center text-muted-foreground py-10">No tourist spots available yet.</p>
+        ) : (
+          <div className="grid md:grid-cols-2 gap-8">
+            {spots.map((spot, i) => (
+              <motion.div
+                key={spot.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                viewport={{ once: true }}
+                onClick={() => handleCardClick(spot.id)}
+                className="bg-card rounded-2xl border overflow-hidden hover:shadow-lg transition-all group cursor-pointer"
+              >
+                <div className="h-56 overflow-hidden relative">
+                  {spot.image_url ? (
+                    <img src={spot.image_url} alt={spot.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  ) : (
+                    <div className="w-full h-full bg-muted flex items-center justify-center text-muted-foreground text-sm">No image</div>
+                  )}
+                  <div className="absolute top-3 right-3 bg-black/40 backdrop-blur-sm rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <ExternalLink className="w-4 h-4 text-white" />
+                  </div>
+                </div>
+                <div className="p-6">
+                  <h3 className="font-heading font-bold text-lg mb-2">{spot.title}</h3>
+                  <p className="text-sm text-muted-foreground line-clamp-2">{spot.short_description}</p>
+                  {spot.location && <p className="text-xs text-muted-foreground mt-2">📍 {spot.location}</p>}
+                  <p className="text-xs text-primary font-medium mt-3 group-hover:underline">View full details →</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
       </section>
 
       {/* Getting There */}

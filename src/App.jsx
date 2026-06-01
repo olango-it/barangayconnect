@@ -20,6 +20,7 @@ import News from '@/pages/News';
 import NewsDetail from '@/pages/NewsDetail';
 import Events from '@/pages/Events';
 import Tourism from '@/pages/Tourism';
+import TourismDetail from '@/pages/TourismDetail';
 import Disaster from '@/pages/Disaster';
 import Transparency from '@/pages/Transparency';
 import Downloads from '@/pages/Downloads';
@@ -45,6 +46,7 @@ import FAQManager from '@/pages/admin/FAQManager';
 import KnowledgeBaseManager from '@/pages/admin/KnowledgeBaseManager';
 import ChatDashboard from '@/pages/admin/ChatDashboard';
 import SitePhotosManager from '@/pages/admin/SitePhotosManager';
+import TourismManager from '@/pages/admin/TourismManager';
 
 // Auth Pages
 import Login from '@/pages/Login';
@@ -90,6 +92,7 @@ const AuthenticatedApp = () => {
         <Route path="/news/:id" element={<NewsDetail />} />
         <Route path="/events" element={<Events />} />
         <Route path="/tourism" element={<Tourism />} />
+        <Route path="/tourism/:id" element={<TourismDetail />} />
         <Route path="/disaster" element={<Disaster />} />
         <Route path="/transparency" element={<Transparency />} />
         <Route path="/downloads" element={<Downloads />} />
@@ -117,6 +120,7 @@ const AuthenticatedApp = () => {
         <Route path="knowledge-base" element={<KnowledgeBaseManager />} />
         <Route path="chat" element={<ChatDashboard />} />
         <Route path="photos" element={<SitePhotosManager />} />
+        <Route path="tourism" element={<TourismManager />} />
       </Route>
 
       <Route path="*" element={<PageNotFound />} />
