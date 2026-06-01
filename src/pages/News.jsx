@@ -59,6 +59,29 @@ export default function News() {
           </div>
         </div>
 
+        {/* Facebook Page Feed */}
+        <div className="mb-10">
+          <h2 className="font-heading text-xl font-bold mb-4 flex items-center gap-2">
+            <span className="w-5 h-5 bg-blue-600 rounded flex items-center justify-center">
+              <svg viewBox="0 0 24 24" fill="white" className="w-3 h-3"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </span>
+            Latest from Facebook
+          </h2>
+          <div className="flex justify-center">
+            <iframe
+              src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Frealedileyas&tabs=timeline&width=500&height=600&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+              width="100%"
+              height="600"
+              style={{ border: "none", overflow: "hidden", maxWidth: 500 }}
+              scrolling="no"
+              frameBorder="0"
+              allowFullScreen
+              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+              className="rounded-xl shadow-md"
+            />
+          </div>
+        </div>
+
         {/* Articles */}
         {isLoading ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
