@@ -1,0 +1,33 @@
+{
+  "name": "Official",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "position": {
+      "type": "string"
+    },
+    "photo_url": {
+      "type": "string"
+    },
+    "biography": {
+      "type": "string"
+    },
+    "contact_info": {
+      "type": "string"
+    },
+    "order": {
+      "type": "number",
+      "default": 0
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "name",
+    "position"
+  ]
+}

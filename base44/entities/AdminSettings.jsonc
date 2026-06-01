@@ -1,0 +1,27 @@
+{
+  "name": "AdminSettings",
+  "type": "object",
+  "properties": {
+    "setting_key": {
+      "type": "string",
+      "description": "Unique key for the setting"
+    },
+    "setting_value": {
+      "type": "string",
+      "description": "Value stored as string/JSON"
+    },
+    "setting_type": {
+      "type": "string",
+      "enum": [
+        "text",
+        "json",
+        "number",
+        "boolean"
+      ]
+    }
+  },
+  "required": [
+    "setting_key",
+    "setting_value"
+  ]
+}

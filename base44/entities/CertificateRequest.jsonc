@@ -1,0 +1,86 @@
+{
+  "name": "CertificateRequest",
+  "type": "object",
+  "properties": {
+    "application_number": {
+      "type": "string",
+      "description": "Auto-generated application tracking number"
+    },
+    "resident_id": {
+      "type": "string",
+      "description": "Reference to Resident"
+    },
+    "applicant_name": {
+      "type": "string"
+    },
+    "document_type": {
+      "type": "string",
+      "enum": [
+        "Barangay Clearance",
+        "Certificate of Residency",
+        "Certificate of Indigency",
+        "Business Clearance",
+        "Good Moral Certificate",
+        "Solo Parent Certificate",
+        "Senior Citizen Certificate",
+        "First Time Job Seeker Certificate",
+        "Custom Certificate"
+      ]
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "New",
+        "Pending",
+        "Approved",
+        "Rejected",
+        "Released"
+      ],
+      "default": "New"
+    },
+    "control_number": {
+      "type": "string"
+    },
+    "qr_verification_code": {
+      "type": "string"
+    },
+    "processing_officer": {
+      "type": "string"
+    },
+    "date_filed": {
+      "type": "string",
+      "format": "date"
+    },
+    "date_approved": {
+      "type": "string",
+      "format": "date"
+    },
+    "date_released": {
+      "type": "string",
+      "format": "date"
+    },
+    "fee": {
+      "type": "number",
+      "default": 0
+    },
+    "remarks": {
+      "type": "string"
+    },
+    "certificate_content": {
+      "type": "string",
+      "description": "Editable certificate body text"
+    },
+    "filed_by_resident": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "applicant_name",
+    "document_type",
+    "purpose"
+  ]
+}

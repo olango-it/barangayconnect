@@ -1,0 +1,97 @@
+{
+  "name": "Resident",
+  "type": "object",
+  "properties": {
+    "full_name": {
+      "type": "string",
+      "description": "Full name of the resident"
+    },
+    "first_name": {
+      "type": "string"
+    },
+    "middle_name": {
+      "type": "string"
+    },
+    "last_name": {
+      "type": "string"
+    },
+    "suffix": {
+      "type": "string"
+    },
+    "date_of_birth": {
+      "type": "string",
+      "format": "date"
+    },
+    "age": {
+      "type": "number"
+    },
+    "gender": {
+      "type": "string",
+      "enum": [
+        "Male",
+        "Female",
+        "Other"
+      ]
+    },
+    "civil_status": {
+      "type": "string",
+      "enum": [
+        "Single",
+        "Married",
+        "Widowed",
+        "Separated",
+        "Divorced"
+      ]
+    },
+    "address": {
+      "type": "string"
+    },
+    "purok_sitio": {
+      "type": "string"
+    },
+    "contact_number": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "occupation": {
+      "type": "string"
+    },
+    "household_number": {
+      "type": "string"
+    },
+    "nationality": {
+      "type": "string",
+      "default": "Filipino"
+    },
+    "voter_status": {
+      "type": "string",
+      "enum": [
+        "Registered",
+        "Not Registered"
+      ]
+    },
+    "photo_url": {
+      "type": "string"
+    },
+    "remarks": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Active",
+        "Inactive",
+        "Deceased",
+        "Transferred"
+      ],
+      "default": "Active"
+    }
+  },
+  "required": [
+    "full_name",
+    "last_name",
+    "first_name"
+  ]
+}

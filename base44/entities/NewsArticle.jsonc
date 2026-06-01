@@ -1,0 +1,49 @@
+{
+  "name": "NewsArticle",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "excerpt": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Announcement",
+        "News",
+        "Advisory",
+        "Event",
+        "Health",
+        "Disaster",
+        "General"
+      ]
+    },
+    "featured_image": {
+      "type": "string"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_published": {
+      "type": "boolean",
+      "default": false
+    },
+    "publish_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "author": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "content"
+  ]
+}

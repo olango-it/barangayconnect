@@ -1,0 +1,35 @@
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "role": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "super_admin",
+        "secretary",
+        "records_officer",
+        "front_desk",
+        "user"
+      ],
+      "default": "user"
+    },
+    "position": {
+      "type": "string"
+    },
+    "employee_id": {
+      "type": "string"
+    },
+    "contact_number": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "disabled"
+      ],
+      "default": "active"
+    }
+  }
+}
