@@ -30,6 +30,9 @@ const adminNavItems = [
 const staffNavItems = [
   { icon: FileText, label: "Certificates", path: "/admin/certificates" },
   { icon: ClipboardList, label: "Requests", path: "/admin/requests" },
+  { icon: Newspaper, label: "Latest News", path: "/admin/news" },
+  { icon: Users, label: "Residents", path: "/admin/residents" },
+  { icon: Calendar, label: "Events", path: "/admin/events" },
 ];
 
 export default function AdminLayout() {
