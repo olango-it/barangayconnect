@@ -1,0 +1,41 @@
+{
+  "name": "Festival",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "patron_saint": {
+      "type": "string"
+    },
+    "celebration_month": {
+      "type": "string"
+    },
+    "featured_image": {
+      "type": "string",
+      "description": "Main banner image URL"
+    },
+    "history": {
+      "type": "string",
+      "description": "Full history of the festival"
+    },
+    "description": {
+      "type": "string",
+      "description": "General description"
+    },
+    "significance": {
+      "type": "string",
+      "description": "Cultural and religious significance"
+    },
+    "activities": {
+      "type": "string",
+      "description": "Festival activities (comma-separated)"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "FestivalImage",
+  "type": "object",
+  "properties": {
+    "image_url": {
+      "type": "string"
+    },
+    "caption": {
+      "type": "string"
+    },
+    "order": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "image_url"
+  ]
+}

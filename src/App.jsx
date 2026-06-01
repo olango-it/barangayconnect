@@ -26,6 +26,7 @@ import Transparency from '@/pages/Transparency';
 import Downloads from '@/pages/Downloads';
 import Contact from '@/pages/Contact';
 import Verify from '@/pages/Verify';
+import Festival from '@/pages/Festival';
 import ResidentPortal from '@/pages/ResidentPortal';
 
 // Admin Gate
@@ -47,6 +48,7 @@ import KnowledgeBaseManager from '@/pages/admin/KnowledgeBaseManager';
 import ChatDashboard from '@/pages/admin/ChatDashboard';
 import SitePhotosManager from '@/pages/admin/SitePhotosManager';
 import TourismManager from '@/pages/admin/TourismManager';
+import FestivalManager from '@/pages/admin/FestivalManager';
 
 // Auth Pages
 import Login from '@/pages/Login';
@@ -98,6 +100,7 @@ const AuthenticatedApp = () => {
         <Route path="/downloads" element={<Downloads />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/verify" element={<Verify />} />
+        <Route path="/festival" element={<Festival />} />
         <Route path="/resident-portal" element={<ResidentPortal />} />
       </Route>
 
@@ -121,6 +124,7 @@ const AuthenticatedApp = () => {
         <Route path="chat" element={<ChatDashboard />} />
         <Route path="photos" element={<SitePhotosManager />} />
         <Route path="tourism" element={<TourismManager />} />
+        <Route path="festival" element={<FestivalManager />} />
       </Route>
 
       <Route path="*" element={<PageNotFound />} />

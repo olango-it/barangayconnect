@@ -17,13 +17,14 @@ const navLinks = [
   { label: "Officials", path: "/officials" },
   { label: "Services", path: "/services" },
   {
-    label: "Information",
-    children: [
-      { label: "News & Announcements", path: "/news" },
-      { label: "Events", path: "/events" },
-      { label: "Tourism", path: "/tourism" },
-      { label: "Disaster Preparedness", path: "/disaster" },
-    ],
+  label: "Information",
+  children: [
+    { label: "News & Announcements", path: "/news" },
+    { label: "Events", path: "/events" },
+    { label: "Tourism", path: "/tourism" },
+    { label: "Disaster Preparedness", path: "/disaster" },
+    { label: "Baliw-Baliw Festival", path: "/festival", external: true },
+  ],
   },
   {
     label: "Transparency",
@@ -96,7 +97,11 @@ export default function PublicNavbar() {
                   <DropdownMenuContent align="start">
                     {link.children.map((child) => (
                       <DropdownMenuItem key={child.path} asChild>
-                        <Link to={child.path} className="w-full">{child.label}</Link>
+                        {child.external ? (
+                          <a href={child.path} target="_blank" rel="noopener noreferrer" className="w-full">{child.label}</a>
+                        ) : (
+                          <Link to={child.path} className="w-full">{child.label}</Link>
+                        )}
                       </DropdownMenuItem>
                     ))}
                   </DropdownMenuContent>
@@ -137,16 +142,29 @@ export default function PublicNavbar() {
                   <p className="px-3 py-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                     {link.label}
                   </p>
-                  {link.children.map((child) => (
-                    <Link
-                      key={child.path}
-                      to={child.path}
-                      className="block px-6 py-2 text-sm hover:bg-muted rounded-md"
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      {child.label}
-                    </Link>
-                  ))}
+                  {link.children.map((child) =>
+                    child.external ? (
+                      <a
+                        key={child.path}
+                        href={child.path}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block px-6 py-2 text-sm hover:bg-muted rounded-md"
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        {child.label}
+                      </a>
+                    ) : (
+                      <Link
+                        key={child.path}
+                        to={child.path}
+                        className="block px-6 py-2 text-sm hover:bg-muted rounded-md"
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        {child.label}
+                      </Link>
+                    )
+                  )}
                 </div>
               ) : (
                 <Link
