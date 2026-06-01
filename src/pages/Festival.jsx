@@ -135,6 +135,24 @@ export default function Festival() {
           </section>
         )}
 
+        {/* Festival Video */}
+        <section>
+          <h2 className="font-heading text-2xl font-bold mb-4">Festival Video</h2>
+          <div className="rounded-2xl overflow-hidden aspect-video bg-black">
+            <iframe
+              src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F657984686218371&show_text=false&width=720"
+              width="100%"
+              height="100%"
+              style={{ border: "none", overflow: "hidden" }}
+              scrolling="no"
+              frameBorder="0"
+              allowFullScreen
+              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+              className="w-full h-full"
+            />
+          </div>
+        </section>
+
         {/* Gallery */}
         {images.length > 0 && (
           <section>
