@@ -108,7 +108,7 @@ export default function About() {
           <h2 className="font-heading text-2xl font-bold text-center mb-10">Barangay Profile</h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: Users, label: "Population (2020 PSA)", value: "4,370" },
+              { icon: Users, label: "Population (2020 PSA)", value: "4,962" },
               { icon: MapPin, label: "Area", value: "Olango Island" },
               { icon: Calendar, label: "Established", value: "Barangay" },
               { icon: Target, label: "Puroks", value: "Multiple" },
