@@ -65,11 +65,15 @@ export default function HeroBanner() {
             className="hidden lg:block"
           >
             <div className="relative">
-              <img
-                src={heroPhoto}
-                alt="Barangay San Vicente Community"
-                className="rounded-2xl shadow-2xl w-full object-cover h-80"
-              />
+              <div className="rounded-2xl overflow-hidden shadow-2xl w-full aspect-video">
+                <iframe
+                  src="https://www.youtube.com/embed/egas-o4Sk8U?autoplay=1&mute=1&loop=1&playlist=egas-o4Sk8U&controls=1&rel=0"
+                  title="Barangay San Vicente"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="w-full h-full"
+                />
+              </div>
               <div className="absolute -bottom-6 -left-6 bg-white text-foreground p-4 rounded-xl shadow-lg">
                 <p className="text-2xl font-bold text-primary">10,000+</p>
                 <p className="text-xs text-muted-foreground">Residents Served</p>
