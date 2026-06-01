@@ -16,15 +16,15 @@ const navLinks = [
   { label: "About", path: "/about" },
   { label: "Officials", path: "/officials" },
   { label: "Services", path: "/services" },
+  { label: "Tourism", path: "/tourism" },
+  { label: "Festival", path: "/festival" },
   {
-  label: "Information",
-  children: [
-    { label: "News & Announcements", path: "/news" },
-    { label: "Events", path: "/events" },
-    { label: "Tourism", path: "/tourism" },
-    { label: "Disaster Preparedness", path: "/disaster" },
-    { label: "Baliw-Baliw Festival", path: "/festival", external: true },
-  ],
+    label: "Information",
+    children: [
+      { label: "News & Announcements", path: "/news" },
+      { label: "Events", path: "/events" },
+      { label: "Disaster Preparedness", path: "/disaster" },
+    ],
   },
   {
     label: "Transparency",
