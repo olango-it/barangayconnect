@@ -73,7 +73,7 @@ export default function About() {
               <h3 className="font-heading text-xl font-bold">Our Mission</h3>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              To deliver efficient, transparent, and responsive governance; to promote sustainable development and environmental conservation; and to empower every resident through inclusive programs and quality public services.
+              To work ahead for the total well-being of populace; to promote progress, through encouragement of their participation and cooperation in a realistic and sustainable socio-cultural, economical, ecological and human development endeavors, and through the collaboration of different NGOs and Civic Organizations towards economical and technological advancement programs with other neighboring barangays.
             </p>
           </div>
         </div>
