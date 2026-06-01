@@ -2,10 +2,10 @@ import React from "react";
 import { Users, MapPin, Home, Calendar } from "lucide-react";
 
 const stats = [
-  { icon: Users, label: "Population (PSA 2020)", value: "4,962", sub: "Census of Population" },
+  { icon: Users, label: "Population (PSA 2024)", value: "4,370", sub: "2024 Census of Population" },
   { icon: Home, label: "Households", value: "1,492", sub: "Census of Population" },
   { icon: MapPin, label: "Location", value: "Olango Island", sub: "Lapu-Lapu City, Cebu" },
-  { icon: Calendar, label: "Census Year", value: "2020", sub: "Philippine Statistics Authority" },
+  { icon: Calendar, label: "Census Year", value: "2024", sub: "Philippine Statistics Authority" },
 ];
 
 export default function BarangayStats() {
