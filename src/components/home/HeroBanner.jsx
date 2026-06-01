@@ -67,9 +67,11 @@ export default function HeroBanner() {
             <div className="relative">
               <div className="rounded-2xl overflow-hidden shadow-2xl w-full aspect-video">
                 <iframe
-                  src="https://www.youtube.com/embed/egas-o4Sk8U?list=RDegas-o4Sk8U&autoplay=0&controls=1&rel=0"
-                  title="Barangay San Vicente"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  src="https://www.youtube.com/embed/egas-o4Sk8U?list=RDegas-o4Sk8U"
+                  title="Baliw Baliw Festival Official Music Video"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
                   allowFullScreen
                   className="w-full h-full"
                 />
