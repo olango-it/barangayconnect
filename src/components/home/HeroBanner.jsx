@@ -3,8 +3,18 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, FileText, Users } from "lucide-react";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
+import { base44 } from "@/api/base44Client";
+
+const DEFAULT_HERO = "https://images.unsplash.com/photo-1573455494060-c5595004fb6c?w=600&h=400&fit=crop";
 
 export default function HeroBanner() {
+  const { data: settings = [] } = useQuery({
+    queryKey: ["admin-photos"],
+    queryFn: () => base44.entities.AdminSettings.filter({}),
+  });
+  const heroPhoto = settings.find((s) => s.setting_key === "photo_hero")?.setting_value || DEFAULT_HERO;
+
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-primary via-primary to-primary/90 text-primary-foreground">
       {/* Background Pattern */}
@@ -56,7 +66,7 @@ export default function HeroBanner() {
           >
             <div className="relative">
               <img
-                src="https://images.unsplash.com/photo-1573455494060-c5595004fb6c?w=600&h=400&fit=crop"
+                src={heroPhoto}
                 alt="Barangay San Vicente Community"
                 className="rounded-2xl shadow-2xl w-full object-cover h-80"
               />

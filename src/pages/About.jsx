@@ -1,6 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Eye, Target, Heart, MapPin, Users, Calendar } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { base44 } from "@/api/base44Client";
 
 const values = [
   { icon: Heart, title: "Integrity", desc: "Upholding honesty and strong moral principles in all our actions." },
@@ -9,7 +11,15 @@ const values = [
   { icon: Target, title: "Excellence", desc: "Striving for the highest standards in public service delivery." },
 ];
 
+const DEFAULT_ABOUT = "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=600&h=400&fit=crop";
+
 export default function About() {
+  const { data: settings = [] } = useQuery({
+    queryKey: ["admin-photos"],
+    queryFn: () => base44.entities.AdminSettings.filter({}),
+  });
+  const aboutPhoto = settings.find((s) => s.setting_key === "photo_about")?.setting_value || DEFAULT_ABOUT;
+
   return (
     <div>
       {/* Header */}
@@ -33,7 +43,7 @@ export default function About() {
           </motion.div>
           <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
             <img
-              src="https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=600&h=400&fit=crop"
+              src={aboutPhoto}
               alt="Olango Island"
               className="rounded-2xl shadow-lg w-full h-72 object-cover"
             />

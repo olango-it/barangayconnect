@@ -44,6 +44,7 @@ import StaffManager from '@/pages/admin/StaffManager';
 import FAQManager from '@/pages/admin/FAQManager';
 import KnowledgeBaseManager from '@/pages/admin/KnowledgeBaseManager';
 import ChatDashboard from '@/pages/admin/ChatDashboard';
+import SitePhotosManager from '@/pages/admin/SitePhotosManager';
 
 // Auth Pages
 import Login from '@/pages/Login';
@@ -115,6 +116,7 @@ const AuthenticatedApp = () => {
         <Route path="faq" element={<FAQManager />} />
         <Route path="knowledge-base" element={<KnowledgeBaseManager />} />
         <Route path="chat" element={<ChatDashboard />} />
+        <Route path="photos" element={<SitePhotosManager />} />
       </Route>
 
       <Route path="*" element={<PageNotFound />} />

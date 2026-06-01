@@ -1,35 +1,34 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { MapPin, Fish, Waves, Camera, Sun } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { base44 } from "@/api/base44Client";
 
-const attractions = [
-  {
-    title: "Olango Island Wildlife Sanctuary",
-    desc: "A protected area and Ramsar Wetland Site, home to migratory birds from Siberia, China, and Japan. One of the best birdwatching destinations in the Philippines.",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop",
-    icon: Fish,
-  },
-  {
-    title: "Beautiful Beaches",
-    desc: "Pristine white sand beaches with crystal clear waters perfect for swimming, snorkeling, and relaxation.",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=400&fit=crop",
-    icon: Waves,
-  },
-  {
-    title: "Marine Sanctuaries",
-    desc: "Protected marine areas with diverse coral reefs and marine life ideal for diving and eco-tourism.",
-    image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&h=400&fit=crop",
-    icon: Fish,
-  },
-  {
-    title: "Local Culture & Heritage",
-    desc: "Experience the rich Visayan culture, local festivals, traditional fishing practices, and warm island hospitality.",
-    image: "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=600&h=400&fit=crop",
-    icon: Camera,
-  },
+const DEFAULT_IMAGES = [
+  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop",
+  "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=400&fit=crop",
+  "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&h=400&fit=crop",
+  "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=600&h=400&fit=crop",
+];
+
+const ATTRACTION_META = [
+  { title: "Olango Island Wildlife Sanctuary", desc: "A protected area and Ramsar Wetland Site, home to migratory birds from Siberia, China, and Japan. One of the best birdwatching destinations in the Philippines.", icon: Fish },
+  { title: "Beautiful Beaches", desc: "Pristine white sand beaches with crystal clear waters perfect for swimming, snorkeling, and relaxation.", icon: Waves },
+  { title: "Marine Sanctuaries", desc: "Protected marine areas with diverse coral reefs and marine life ideal for diving and eco-tourism.", icon: Fish },
+  { title: "Local Culture & Heritage", desc: "Experience the rich Visayan culture, local festivals, traditional fishing practices, and warm island hospitality.", icon: Camera },
 ];
 
 export default function Tourism() {
+  const { data: settings = [] } = useQuery({
+    queryKey: ["admin-photos"],
+    queryFn: () => base44.entities.AdminSettings.filter({}),
+  });
+
+  const attractions = ATTRACTION_META.map((meta, i) => ({
+    ...meta,
+    image: settings.find((s) => s.setting_key === `photo_tourism_${i + 1}`)?.setting_value || DEFAULT_IMAGES[i],
+  }));
+
   return (
     <div>
       <section className="bg-primary text-primary-foreground py-16">

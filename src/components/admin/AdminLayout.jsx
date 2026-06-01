@@ -24,6 +24,7 @@ const adminNavItems = [
   { icon: MessageSquare, label: "Chat Dashboard", path: "/admin/chat" },
   { icon: HelpCircle, label: "FAQ Manager", path: "/admin/faq" },
   { icon: BookOpen, label: "Knowledge Base", path: "/admin/knowledge-base" },
+  { icon: Image, label: "Site Photos", path: "/admin/photos" },
 ];
 
 const staffNavItems = [
