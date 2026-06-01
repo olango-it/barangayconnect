@@ -10,9 +10,11 @@ export default function PublicFooter() {
           {/* About */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-secondary-foreground font-heading font-bold">
-                SV
-              </div>
+              <img
+                src="https://media.base44.com/images/public/6a1d00c12929ea8d18f9682c/18bf23381_272142171_135339558948283_9205934589195432511_n.jpg"
+                alt="Barangay San Vicente Logo"
+                className="w-10 h-10 object-contain brightness-0 invert"
+              />
               <div>
                 <p className="font-heading font-bold text-sm">Barangay San Vicente</p>
                 <p className="text-[10px] opacity-80">Olango Island, Lapu-Lapu City</p>

@@ -63,9 +63,11 @@ export default function PublicNavbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-heading font-bold text-lg">
-              SV
-            </div>
+            <img
+              src="https://media.base44.com/images/public/6a1d00c12929ea8d18f9682c/18bf23381_272142171_135339558948283_9205934589195432511_n.jpg"
+              alt="Barangay San Vicente Logo"
+              className="w-10 h-10 object-contain mix-blend-multiply"
+            />
             <div className="hidden sm:block">
               <p className="font-heading font-bold text-sm text-primary leading-tight">Barangay San Vicente</p>
               <p className="text-[10px] text-muted-foreground leading-tight">Olango Island, Lapu-Lapu City</p>
