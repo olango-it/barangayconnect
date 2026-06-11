@@ -38,5 +38,58 @@
   "required": [
     "title",
     "category"
-  ]
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": {
+          "$in": [
+            "admin",
+            "super_admin",
+            "records_officer"
+          ]
+        }
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "data.is_public": true
+        },
+        {
+          "user_condition": {
+            "role": {
+              "$in": [
+                "admin",
+                "super_admin",
+                "records_officer"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": {
+          "$in": [
+            "admin",
+            "super_admin",
+            "records_officer"
+          ]
+        }
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": {
+          "$in": [
+            "admin",
+            "super_admin",
+            "records_officer"
+          ]
+        }
+      }
+    }
+  }
 }
