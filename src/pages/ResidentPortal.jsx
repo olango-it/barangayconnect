@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import MobileSelect from "@/components/ui/MobileSelect";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/components/ui/use-toast";
@@ -86,11 +86,33 @@ export default function ResidentPortal() {
       status: "New",
       application_number: `APP-${Date.now().toString(36).toUpperCase()}`,
     }),
+    onMutate: async (data) => {
+      await queryClient.cancelQueries({ queryKey: ["my-requests", user?.id] });
+      const previous = queryClient.getQueryData(["my-requests", user?.id]);
+      const optimistic = {
+        id: `optimistic-${Date.now()}`,
+        document_type: data.document_type,
+        purpose: data.purpose,
+        applicant_name: user.full_name,
+        status: "New",
+        application_number: `APP-${Date.now().toString(36).toUpperCase()}`,
+        created_date: new Date().toISOString(),
+        filed_by_resident: true,
+      };
+      queryClient.setQueryData(["my-requests", user?.id], (old = []) => [optimistic, ...old]);
+      setDialogOpen(false);
+      setForm({ document_type: "", purpose: "" });
+      return { previous };
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["my-requests"] });
       toast({ title: "Request Submitted", description: "Your application has been filed." });
-      setDialogOpen(false);
-      setForm({ document_type: "", purpose: "" });
+    },
+    onError: (_err, _data, context) => {
+      if (context?.previous) {
+        queryClient.setQueryData(["my-requests", user?.id], context.previous);
+      }
+      toast({ title: "Failed to submit", description: "Please try again.", variant: "destructive" });
     },
   });
 
@@ -151,14 +173,12 @@ export default function ResidentPortal() {
                 <form onSubmit={(e) => { e.preventDefault(); submitMutation.mutate(form); }} className="space-y-4">
                   <div>
                     <Label>Document Type *</Label>
-                    <Select value={form.document_type} onValueChange={(v) => setForm({ ...form, document_type: v })}>
-                      <SelectTrigger><SelectValue placeholder="Select document type" /></SelectTrigger>
-                      <SelectContent>
-                        {docTypes.map((d) => (
-                          <SelectItem key={d} value={d}>{d}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <MobileSelect
+                      value={form.document_type}
+                      onValueChange={(v) => setForm({ ...form, document_type: v })}
+                      placeholder="Select document type"
+                      options={docTypes.map((d) => ({ value: d, label: d }))}
+                    />
                   </div>
                   <div>
                     <Label>Purpose *</Label>

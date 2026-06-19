@@ -55,9 +55,27 @@ export default function SitePhotosManager() {
 
   const saveMutation = useMutation({
     mutationFn: ({ key, value, id }) => saveSetting(key, value, id),
+    onMutate: async ({ key, value }) => {
+      await queryClient.cancelQueries({ queryKey: ["admin-photos"] });
+      const previous = queryClient.getQueryData(["admin-photos"]);
+      queryClient.setQueryData(["admin-photos"], (old = []) => {
+        const exists = old.find((s) => s.setting_key === key);
+        if (exists) {
+          return old.map((s) => s.setting_key === key ? { ...s, setting_value: value } : s);
+        }
+        return [...old, { setting_key: key, setting_value: value, setting_type: "text", id: `optimistic-${key}` }];
+      });
+      return { previous };
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-photos"] });
       toast({ title: "Saved successfully!" });
+    },
+    onError: (_err, _vars, context) => {
+      if (context?.previous) {
+        queryClient.setQueryData(["admin-photos"], context.previous);
+      }
+      toast({ title: "Save failed", description: "Please try again.", variant: "destructive" });
     },
   });
 

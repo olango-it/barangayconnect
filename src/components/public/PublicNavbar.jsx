@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, Phone } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, X, ChevronDown, Phone, ArrowLeft } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
@@ -36,9 +36,15 @@ const navLinks = [
   },
 ];
 
+// Tab root paths — pages deeper than these show a back button on mobile
+const TAB_ROOTS = ["/", "/services", "/news", "/events", "/tourism", "/festival", "/about", "/officials", "/disaster", "/transparency", "/downloads", "/contact", "/verify", "/resident-portal"];
+
 export default function PublicNavbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const isSubPage = !TAB_ROOTS.includes(location.pathname);
 
   const { data: settings = [] } = useQuery({
     queryKey: ["admin-photos"],
@@ -120,15 +126,27 @@ export default function PublicNavbar() {
             )}
           </nav>
 
-          {/* Mobile Toggle */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="lg:hidden"
-            onClick={() => setMobileOpen(!mobileOpen)}
-          >
-            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </Button>
+          {/* Mobile: back button on sub-pages, hamburger otherwise */}
+          {isSubPage ? (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="lg:hidden"
+              onClick={() => navigate(-1)}
+              aria-label="Go back"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </Button>
+          ) : (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="lg:hidden"
+              onClick={() => setMobileOpen(!mobileOpen)}
+            >
+              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </Button>
+          )}
         </div>
       </div>
 
