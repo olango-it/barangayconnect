@@ -1,56 +1,65 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, FileText, Users } from "lucide-react";
+import { ArrowRight, FileText, Users, MapPin, Shield } from "lucide-react";
 import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 
-const DEFAULT_HERO = "https://images.unsplash.com/photo-1573455494060-c5595004fb6c?w=600&h=400&fit=crop";
+const DEFAULT_HERO = "https://images.unsplash.com/photo-1573455494060-c5595004fb6c?w=1600&h=900&fit=crop";
 
 export default function HeroBanner() {
   const { data: settings = [] } = useQuery({
     queryKey: ["admin-photos"],
-    queryFn: () => base44.entities.AdminSettings.filter({}),
+    queryFn: async () => {
+      const res = await base44.functions.invoke('adminSettingsApi', { action: 'list' });
+      return res.data || [];
+    },
   });
   const heroPhoto = settings.find((s) => s.setting_key === "photo_hero")?.setting_value || DEFAULT_HERO;
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-primary via-primary to-primary/90 text-primary-foreground">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-secondary rounded-full -translate-y-1/2 translate-x-1/3" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent rounded-full translate-y-1/3 -translate-x-1/4" />
+    <section className="relative min-h-[600px] lg:min-h-[660px] flex items-center overflow-hidden">
+      {/* Background Image + Overlays */}
+      <div className="absolute inset-0">
+        <img src={heroPhoto} alt="Barangay San Vicente" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/80 to-primary/50" />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-primary/20" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 py-16 sm:py-24 lg:py-32">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative max-w-7xl mx-auto px-4 py-16 sm:py-20 lg:py-24 w-full">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          {/* Left: Text Content */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="text-white"
           >
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-1.5 rounded-full text-xs font-medium mb-6">
-              <div className="w-2 h-2 bg-secondary rounded-full animate-pulse" />
+            <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full text-xs font-medium mb-6">
+              <Shield className="w-3.5 h-3.5 text-secondary" />
               Official Government Website
             </div>
-            <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight mb-4">
-              Barangay San Vicente
+            <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] mb-4">
+              Barangay<br />San Vicente
             </h1>
-            <p className="text-lg opacity-90 mb-2">Olango Island, Lapu-Lapu City, Cebu, Philippines</p>
-            <p className="text-sm opacity-70 mb-8 max-w-lg leading-relaxed">
-              Welcome to the official website of Barangay San Vicente. We are committed to serving our community with transparency, integrity, and excellence in public service.
+            <div className="flex items-center gap-2 text-white/80 mb-5">
+              <MapPin className="w-4 h-4 text-secondary shrink-0" />
+              <span className="text-sm font-medium">Olango Island, Lapu-Lapu City, Cebu, Philippines</span>
+            </div>
+            <p className="text-base text-white/75 mb-8 max-w-lg leading-relaxed">
+              Serving our community with transparency, integrity, and excellence in public service.
             </p>
             <div className="flex flex-wrap gap-3">
               <Link to="/services">
-                <Button size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold gap-2">
+                <Button size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold gap-2 shadow-lg shadow-black/20">
                   <FileText className="w-4 h-4" />
                   Our Services
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
               <Link to="/resident-portal">
-                <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10 gap-2">
+                <Button size="lg" variant="outline" className="border-white/30 text-white bg-white/5 backdrop-blur-sm hover:bg-white/15 hover:text-white gap-2">
                   <Users className="w-4 h-4" />
                   Resident Portal
                 </Button>
@@ -58,14 +67,15 @@ export default function HeroBanner() {
             </div>
           </motion.div>
 
+          {/* Right: Video Cards */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
             className="hidden lg:flex flex-col gap-4"
           >
-            <div className="relative">
-              <div className="rounded-2xl overflow-hidden shadow-2xl w-full aspect-video">
+            <div className="rounded-3xl overflow-hidden shadow-2xl border border-white/20 backdrop-blur-md bg-white/10 p-3">
+              <div className="rounded-2xl overflow-hidden aspect-video">
                 <iframe
                   src="https://www.youtube.com/embed/egas-o4Sk8U?list=RDegas-o4Sk8U"
                   title="Baliw Baliw Festival Official Music Video"
@@ -76,18 +86,27 @@ export default function HeroBanner() {
                   className="w-full h-full"
                 />
               </div>
-
+              <div className="flex items-center gap-2 px-2 pt-3 pb-1 text-white/85 text-xs font-medium">
+                <div className="w-1.5 h-1.5 bg-secondary rounded-full" />
+                Baliw Baliw Festival • Official Music Video
+              </div>
             </div>
-            <div className="rounded-2xl overflow-hidden shadow-2xl w-full aspect-video mt-6">
-              <iframe
-                src="https://www.youtube.com/embed/RcJAd-mbKuk"
-                title="Barangay San Vicente Hym"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-                className="w-full h-full"
-              />
+            <div className="rounded-3xl overflow-hidden shadow-2xl border border-white/20 backdrop-blur-md bg-white/10 p-3">
+              <div className="rounded-2xl overflow-hidden aspect-video">
+                <iframe
+                  src="https://www.youtube.com/embed/RcJAd-mbKuk"
+                  title="Barangay San Vicente Hymn"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  allowFullScreen
+                  className="w-full h-full"
+                />
+              </div>
+              <div className="flex items-center gap-2 px-2 pt-3 pb-1 text-white/85 text-xs font-medium">
+                <div className="w-1.5 h-1.5 bg-secondary rounded-full" />
+                Barangay San Vicente Hymn
+              </div>
             </div>
           </motion.div>
         </div>
