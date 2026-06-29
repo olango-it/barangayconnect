@@ -85,8 +85,15 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground font-body;
+  }
+  /* Subtle hover lift for interactive cards */
+  a, button {
+    transition: color 0.15s ease, background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
   }
 }
 

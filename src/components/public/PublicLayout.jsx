@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import PublicNavbar from "./PublicNavbar";
 import PublicFooter from "./PublicFooter";
 import BottomNav from "./BottomNav";
+import BackToTop from "./BackToTop";
 import ChatWidget from "@/components/chatbot/ChatWidget";
 
 // Apply dark mode based on system preference
@@ -41,6 +42,7 @@ export default function PublicLayout() {
         <PublicFooter />
       </div>
       <BottomNav />
+      <BackToTop />
       <ChatWidget />
     </div>
   );

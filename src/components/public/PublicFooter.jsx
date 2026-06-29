@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { MapPin, Phone, Mail, Clock, Facebook } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Facebook, Youtube, Send } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 
@@ -85,8 +85,36 @@ export default function PublicFooter() {
         </div>
       </div>
       <div className="border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between text-xs opacity-60">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs opacity-60">
           <p>© {new Date().getFullYear()} Barangay San Vicente. All rights reserved.</p>
+          {/* Social media links */}
+          <div className="flex items-center gap-3">
+            <a
+              href="https://www.facebook.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+              className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+            >
+              <Facebook className="w-4 h-4" />
+            </a>
+            <a
+              href="https://www.youtube.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="YouTube"
+              className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+            >
+              <Youtube className="w-4 h-4" />
+            </a>
+            <a
+              href={`mailto:${getSetting("contact_email", "brgy.sanvicente@gmail.com")}`}
+              aria-label="Email"
+              className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+            >
+              <Send className="w-4 h-4" />
+            </a>
+          </div>
           <p className="mt-1 sm:mt-0">Republic of the Philippines</p>
         </div>
       </div>
