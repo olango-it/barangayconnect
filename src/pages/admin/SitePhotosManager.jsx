@@ -55,16 +55,15 @@ export default function SitePhotosManager() {
 
   const saveMutation = useMutation({
     mutationFn: ({ key, value, id }) => saveSetting(key, value, id),
-    onMutate: async ({ key, value }) => {
+    onMutate: async ({ key, value, id }) => {
       await queryClient.cancelQueries({ queryKey: ["admin-photos"] });
       const previous = queryClient.getQueryData(["admin-photos"]);
-      queryClient.setQueryData(["admin-photos"], (old = []) => {
-        const exists = old.find((s) => s.setting_key === key);
-        if (exists) {
-          return old.map((s) => s.setting_key === key ? { ...s, setting_value: value } : s);
-        }
-        return [...old, { setting_key: key, setting_value: value, setting_type: "text", id: `optimistic-${key}` }];
-      });
+      // Only optimistically update existing records; new records are handled on success
+      if (id) {
+        queryClient.setQueryData(["admin-photos"], (old = []) =>
+          old.map((s) => s.setting_key === key ? { ...s, setting_value: value } : s)
+        );
+      }
       return { previous };
     },
     onSuccess: () => {
