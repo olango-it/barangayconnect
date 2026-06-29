@@ -30,11 +30,8 @@ const CONTACT_KEYS = [
 ];
 
 async function saveSetting(key, value, existingId) {
-  if (existingId) {
-    return base44.entities.AdminSettings.update(existingId, { setting_value: value });
-  } else {
-    return base44.entities.AdminSettings.create({ setting_key: key, setting_value: value, setting_type: "text" });
-  }
+  const res = await base44.functions.invoke('adminSettingsApi', { action: 'save', key, value, existingId });
+  return res.data;
 }
 
 export default function SitePhotosManager() {
@@ -45,7 +42,10 @@ export default function SitePhotosManager() {
 
   const { data: settings = [], isLoading } = useQuery({
     queryKey: ["admin-photos"],
-    queryFn: () => base44.entities.AdminSettings.filter({}),
+    queryFn: async () => {
+      const res = await base44.functions.invoke('adminSettingsApi', { action: 'list' });
+      return res.data || [];
+    },
   });
 
   const getSettingValue = (key) => {
