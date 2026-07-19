@@ -1,7 +1,9 @@
 import React, { useRef } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Shield, User, Download, Printer } from "lucide-react";
+import { User, Download, Printer } from "lucide-react";
+
+const BARANGAY_LOGO = "https://media.base44.com/images/public/6a1d00c12929ea8d18f9682c/18bf23381_272142171_135339558948283_9205934589195432511_n.jpg";
 import { format } from "date-fns";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -46,8 +48,8 @@ export default function ResidentIDCard({ resident, showActions = true }) {
       <div ref={cardRef} className="bg-white rounded-2xl overflow-hidden shadow-xl border border-border w-full max-w-sm mx-auto">
         {/* Header */}
         <div className="bg-primary text-primary-foreground px-4 py-3 flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center shrink-0">
-            <Shield className="w-6 h-6" />
+          <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center shrink-0 overflow-hidden">
+            <img src={BARANGAY_LOGO} alt="Barangay Logo" crossOrigin="anonymous" className="w-11 h-11 object-contain mix-blend-multiply" />
           </div>
           <div>
             <h3 className="font-heading font-bold text-sm leading-tight">Barangay San Vicente</h3>
