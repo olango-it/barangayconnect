@@ -115,7 +115,7 @@ export default function PublicFooter() {
               <Send className="w-4 h-4" />
             </a>
           </div>
-          <p className="mt-1 sm:mt-0">Republic of the Philippines</p>
+          <p className="mt-1 sm:mt-0">Developed by IslandTech Solutions Inc.</p>
         </div>
       </div>
     </footer>
