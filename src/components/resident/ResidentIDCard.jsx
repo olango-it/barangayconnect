@@ -47,9 +47,9 @@ export default function ResidentIDCard({ resident, showActions = true }) {
     <div>
       <div ref={cardRef} className="bg-white rounded-2xl overflow-hidden shadow-xl border border-border w-full max-w-sm mx-auto">
         {/* Header */}
-        <div className="bg-primary text-primary-foreground px-4 py-3 flex items-center gap-3">
-          <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center shrink-0 overflow-hidden">
-            <img src={BARANGAY_LOGO} alt="Barangay Logo" crossOrigin="anonymous" className="w-11 h-11 object-contain mix-blend-multiply" />
+        <div className="bg-primary text-primary-foreground px-4 py-3 flex flex-col items-center justify-center gap-1 text-center">
+          <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center shrink-0 overflow-hidden">
+            <img src={BARANGAY_LOGO} alt="Barangay Logo" crossOrigin="anonymous" className="w-15 h-15 object-contain mix-blend-multiply" />
           </div>
           <div>
             <h3 className="font-heading font-bold text-sm leading-tight">Barangay San Vicente</h3>
