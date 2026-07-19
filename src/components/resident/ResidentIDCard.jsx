@@ -49,7 +49,7 @@ export default function ResidentIDCard({ resident, showActions = true }) {
       <div ref={cardRef} className="bg-white rounded-2xl overflow-hidden shadow-xl border border-border w-full max-w-sm mx-auto">
         {/* Header */}
         <div className="bg-primary text-primary-foreground px-4 py-3 relative flex items-center justify-between gap-2">
-          <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center shrink-0 overflow-hidden">
+          <div className="w-14 h-14 shrink-0 overflow-hidden">
             <img src={BARANGAY_LOGO} alt="Barangay Logo" crossOrigin="anonymous" className="w-full h-full object-contain" />
           </div>
           <div className="flex-1 text-center min-w-0">
