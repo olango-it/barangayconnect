@@ -35,16 +35,7 @@
         }
       }
     },
-    "read": {
-      "user_condition": {
-        "role": {
-          "$in": [
-            "admin",
-            "super_admin"
-          ]
-        }
-      }
-    },
+    "read": {},
     "update": {
       "user_condition": {
         "role": {
