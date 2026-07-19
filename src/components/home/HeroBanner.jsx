@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 
-const DEFAULT_HERO = "https://media.base44.com/images/public/6a1d00c12929ea8d18f9682c/b0b79c363_losbanoshall.jpg";
+const DEFAULT_HERO = "https://media.base44.com/images/public/6a1d00c12929ea8d18f9682c/51e2c6f70_losbanoshall.jpg";
 
 export default function HeroBanner() {
   const { data: settings = [] } = useQuery({
