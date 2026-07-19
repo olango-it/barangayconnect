@@ -6,10 +6,7 @@ import { base44 } from "@/api/base44Client";
 export default function EmergencyHotlines() {
   const { data: settings = [] } = useQuery({
     queryKey: ["admin-photos"],
-    queryFn: async () => {
-      const res = await base44.functions.invoke('adminSettingsApi', { action: 'list' });
-      return res.data || [];
-    },
+    queryFn: () => base44.entities.AdminSettings.filter({}),
   });
 
   const getSetting = (key, fallback) =>

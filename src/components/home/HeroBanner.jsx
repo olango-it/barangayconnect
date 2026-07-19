@@ -11,10 +11,7 @@ const DEFAULT_HERO = "https://media.base44.com/images/public/6a1d00c12929ea8d18f
 export default function HeroBanner() {
   const { data: settings = [] } = useQuery({
     queryKey: ["admin-photos"],
-    queryFn: async () => {
-      const res = await base44.functions.invoke('adminSettingsApi', { action: 'list' });
-      return res.data || [];
-    },
+    queryFn: () => base44.entities.AdminSettings.filter({}),
   });
   const heroPhoto = settings.find((s) => s.setting_key === "photo_hero")?.setting_value || DEFAULT_HERO;
 
