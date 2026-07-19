@@ -2,6 +2,10 @@
   "name": "Resident",
   "type": "object",
   "properties": {
+    "resident_id": {
+      "type": "string",
+      "description": "Unique resident ID (e.g., BRGY-2026-000001)"
+    },
     "full_name": {
       "type": "string",
       "description": "Full name of the resident"
@@ -43,11 +47,27 @@
         "Divorced"
       ]
     },
+    "nationality": {
+      "type": "string",
+      "default": "Filipino"
+    },
     "address": {
       "type": "string"
     },
     "purok_sitio": {
       "type": "string"
+    },
+    "barangay": {
+      "type": "string",
+      "default": "San Vicente"
+    },
+    "municipality": {
+      "type": "string",
+      "default": "Lapu-Lapu City"
+    },
+    "province": {
+      "type": "string",
+      "default": "Cebu"
     },
     "contact_number": {
       "type": "string"
@@ -58,12 +78,12 @@
     "occupation": {
       "type": "string"
     },
+    "emergency_contact": {
+      "type": "string",
+      "description": "Emergency contact name and number"
+    },
     "household_number": {
       "type": "string"
-    },
-    "nationality": {
-      "type": "string",
-      "default": "Filipino"
     },
     "voter_status": {
       "type": "string",
@@ -102,5 +122,71 @@
     "full_name",
     "last_name",
     "first_name"
-  ]
+  ],
+  "rls": {
+    "create": {},
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "records_officer"
+          }
+        },
+        {
+          "data.created_by_id": "{user_id}"
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "records_officer"
+          }
+        },
+        {
+          "data.created_by_id": "{user_id}"
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "super_admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "records_officer"
+          }
+        }
+      ]
+    }
+  }
 }

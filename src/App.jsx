@@ -28,6 +28,7 @@ import Contact from '@/pages/Contact';
 import Verify from '@/pages/Verify';
 import Festival from '@/pages/Festival';
 import ResidentPortal from '@/pages/ResidentPortal';
+import ResidentProfile from '@/pages/ResidentProfile';
 
 // Admin Gate
 import AdminGate from '@/pages/AdminGate';
@@ -102,6 +103,7 @@ const AuthenticatedApp = () => {
         <Route path="/verify" element={<Verify />} />
         <Route path="/festival" element={<Festival />} />
         <Route path="/resident-portal" element={<ResidentPortal />} />
+        <Route path="/resident-portal/profile" element={<ResidentProfile />} />
       </Route>
 
       {/* Admin gate (PIN + login) */}
