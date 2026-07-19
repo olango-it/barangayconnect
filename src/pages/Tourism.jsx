@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Sun, ExternalLink } from "lucide-react";
+import { Sun, MapPin, Clock, Tag, Lightbulb, X } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 export default function Tourism() {
   const { data: spots = [], isLoading } = useQuery({
@@ -10,9 +11,7 @@ export default function Tourism() {
     queryFn: () => base44.entities.TouristSpot.filter({ is_active: true }, "order"),
   });
 
-  const handleCardClick = (id) => {
-    window.open(`/tourism/${id}`, "_blank");
-  };
+  const [selected, setSelected] = useState(null);
 
   return (
     <div>
@@ -58,7 +57,7 @@ export default function Tourism() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
                 viewport={{ once: true }}
-                onClick={() => handleCardClick(spot.id)}
+                onClick={() => setSelected(spot)}
                 className="bg-card rounded-2xl border overflow-hidden hover:shadow-lg transition-all group cursor-pointer"
               >
                 <div className="h-56 overflow-hidden relative">
@@ -67,9 +66,6 @@ export default function Tourism() {
                   ) : (
                     <div className="w-full h-full bg-muted flex items-center justify-center text-muted-foreground text-sm">No image</div>
                   )}
-                  <div className="absolute top-3 right-3 bg-black/40 backdrop-blur-sm rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <ExternalLink className="w-4 h-4 text-white" />
-                  </div>
                 </div>
                 <div className="p-6">
                   <h3 className="font-heading font-bold text-lg mb-2">{spot.title}</h3>
@@ -104,6 +100,101 @@ export default function Tourism() {
           </div>
         </div>
       </section>
+
+      {/* Detail Dialog */}
+      <Dialog open={!!selected} onOpenChange={(open) => !open && setSelected(null)}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto p-0">
+          {selected && (
+            <>
+              {selected.image_url && (
+                <div className="relative h-56 w-full overflow-hidden rounded-t-lg">
+                  <img src={selected.image_url} alt={selected.title} className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-5">
+                    <h2 className="font-heading text-2xl font-bold text-white">{selected.title}</h2>
+                    {selected.location && (
+                      <div className="flex items-center gap-1 text-white/80 mt-1">
+                        <MapPin className="w-4 h-4" />
+                        <span className="text-sm">{selected.location}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+              <div className="p-6 space-y-5">
+                {!selected.image_url && (
+                  <h2 className="font-heading text-2xl font-bold">{selected.title}</h2>
+                )}
+
+                <div className="grid sm:grid-cols-3 gap-4">
+                  {selected.best_time_to_visit && (
+                    <div className="bg-card border rounded-xl p-4 flex items-start gap-3">
+                      <Clock className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Best Time</p>
+                        <p className="text-sm mt-0.5">{selected.best_time_to_visit}</p>
+                      </div>
+                    </div>
+                  )}
+                  {selected.entrance_fee && (
+                    <div className="bg-card border rounded-xl p-4 flex items-start gap-3">
+                      <Tag className="w-5 h-5 text-secondary mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Entrance Fee</p>
+                        <p className="text-sm mt-0.5">{selected.entrance_fee}</p>
+                      </div>
+                    </div>
+                  )}
+                  {selected.location && (
+                    <div className="bg-card border rounded-xl p-4 flex items-start gap-3">
+                      <MapPin className="w-5 h-5 text-accent mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Location</p>
+                        <p className="text-sm mt-0.5">{selected.location}</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {selected.full_description && (
+                  <div>
+                    <h3 className="font-heading text-lg font-bold mb-2">About This Place</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">{selected.full_description}</p>
+                  </div>
+                )}
+
+                {selected.short_description && !selected.full_description && (
+                  <div>
+                    <h3 className="font-heading text-lg font-bold mb-2">About This Place</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">{selected.short_description}</p>
+                  </div>
+                )}
+
+                {selected.activities && (
+                  <div>
+                    <h3 className="font-heading text-lg font-bold mb-2">Activities</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {selected.activities.split(",").map((a) => a.trim()).filter(Boolean).map((act) => (
+                        <span key={act} className="bg-primary/10 text-primary text-sm px-3 py-1 rounded-full font-medium">{act}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {selected.tips && (
+                  <div className="bg-secondary/10 border border-secondary/30 rounded-xl p-5">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Lightbulb className="w-5 h-5 text-secondary" />
+                      <h3 className="font-heading font-bold">Visitor Tips</h3>
+                    </div>
+                    <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">{selected.tips}</p>
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
