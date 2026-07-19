@@ -124,7 +124,7 @@
     "first_name"
   ],
   "rls": {
-    "create": {},
+    "create": true,
     "read": {
       "$or": [
         {
@@ -143,7 +143,7 @@
           }
         },
         {
-          "data.created_by_id": "{user_id}"
+          "created_by_id": "{{user.id}}"
         }
       ]
     },
@@ -165,7 +165,7 @@
           }
         },
         {
-          "data.created_by_id": "{user_id}"
+          "created_by_id": "{{user.id}}"
         }
       ]
     },
