@@ -5,7 +5,6 @@ import PublicNavbar from "./PublicNavbar";
 import PublicFooter from "./PublicFooter";
 import BottomNav from "./BottomNav";
 import BackToTop from "./BackToTop";
-import ChatWidget from "@/components/chatbot/ChatWidget";
 
 // Apply dark mode based on system preference
 if (typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
@@ -43,7 +42,6 @@ export default function PublicLayout() {
       </div>
       <BottomNav />
       <BackToTop />
-      <ChatWidget />
     </div>
   );
 }

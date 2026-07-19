@@ -13,6 +13,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { format } from "date-fns";
 import usePullToRefresh from "@/hooks/usePullToRefresh";
 import PullToRefreshIndicator from "@/components/PullToRefreshIndicator";
+import ChatWidget from "@/components/chatbot/ChatWidget";
 
 const docTypes = [
   "Barangay Clearance",
@@ -277,6 +278,7 @@ export default function ResidentPortal() {
           </div>
         </DialogContent>
       </Dialog>
+      <ChatWidget />
     </div>
   );
 }
