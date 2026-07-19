@@ -1,10 +1,37 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { base44 } from "@/api/base44Client";
-import { MessageCircle, X, Minus, Send, Bot } from "lucide-react";
+import { MessageCircle, X, Minus, Send, Bot, GripVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 const SESSION_ID = "session_" + Math.random().toString(36).substr(2, 9);
+
+function useDraggable() {
+  const [pos, setPos] = useState(null);
+  const dragRef = useRef({ dragging: false, offsetX: 0, offsetY: 0 });
+
+  const onPointerDown = useCallback((e) => {
+    const rect = e.currentTarget.parentElement.getBoundingClientRect();
+    dragRef.current = { dragging: true, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top };
+    e.currentTarget.setPointerCapture(e.pointerId);
+  }, []);
+
+  const onPointerMove = useCallback((e) => {
+    if (!dragRef.current.dragging) return;
+    const x = e.clientX - dragRef.current.offsetX;
+    const y = e.clientY - dragRef.current.offsetY;
+    const clampedX = Math.max(0, Math.min(x, window.innerWidth - 56));
+    const clampedY = Math.max(0, Math.min(y, window.innerHeight - 56));
+    setPos({ x: clampedX, y: clampedY });
+  }, []);
+
+  const onPointerUp = useCallback((e) => {
+    dragRef.current.dragging = false;
+    try { e.currentTarget.releasePointerCapture(e.pointerId); } catch {}
+  }, []);
+
+  return { pos, onPointerDown, onPointerMove, onPointerUp };
+}
 
 const SYSTEM_PROMPT = `Ikaw si "VINCE" (Virtual Intelligence for the Community of San Vicente), ang opisyal nga virtual assistant sa Barangay San Vicente, Olango Island.
 
@@ -42,6 +69,18 @@ export default function ChatWidget() {
   const [kb, setKb] = useState([]);
   const [announcements, setAnnouncements] = useState([]);
   const bottomRef = useRef(null);
+  const { pos, onPointerDown, onPointerMove, onPointerUp } = useDraggable();
+
+  const positionStyle = pos
+    ? { left: pos.x, top: pos.y, right: "auto", bottom: "auto" }
+    : {};
+
+  const dragProps = {
+    onPointerDown,
+    onPointerMove,
+    onPointerUp,
+    style: { cursor: "grab", touchAction: "none" },
+  };
 
   useEffect(() => {
     base44.entities.FAQ.filter({ is_active: true }).then(setFaqs).catch(() => {});
@@ -107,20 +146,30 @@ Assistant (tubaga sa Bisaya):`;
     return (
       <button
         onClick={() => setOpen(true)}
+        {...dragProps}
+        style={{ ...dragProps.style, ...positionStyle }}
         className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-primary text-white shadow-2xl flex items-center justify-center hover:scale-110 transition-transform"
         aria-label="Open Chat"
       >
         <MessageCircle className="w-6 h-6" />
+        <GripVertical className="absolute -top-1 -left-1 w-3 h-3 text-white/50" />
         <span className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white" />
       </button>
     );
   }
 
   return (
-    <div className={`fixed bottom-6 right-6 z-50 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl flex flex-col border border-border overflow-hidden transition-all ${minimized ? "h-14" : "h-[520px]"}`}>
+    <div
+      className={`fixed bottom-6 right-6 z-50 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl flex flex-col border border-border overflow-hidden transition-all ${minimized ? "h-14" : "h-[520px]"}`}
+      style={positionStyle}
+    >
       {/* Header */}
-      <div className="bg-primary text-white px-4 py-3 flex items-center justify-between shrink-0">
+      <div
+        {...dragProps}
+        className="bg-primary text-white px-4 py-3 flex items-center justify-between shrink-0"
+      >
         <div className="flex items-center gap-2">
+          <GripVertical className="w-3 h-3 text-white/50" />
           <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
             <Bot className="w-4 h-4" />
           </div>
