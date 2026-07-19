@@ -174,7 +174,7 @@ export default function ResidentProfile() {
         <div className="bg-card rounded-xl border p-6">
           <h3 className="font-heading text-lg font-bold mb-4">Digital Resident ID Card</h3>
           <div className="max-w-sm mx-auto">
-            <ResidentIDCard resident={resident} />
+            <ResidentIDCard resident={resident} showActions={false} />
           </div>
         </div>
 

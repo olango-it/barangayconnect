@@ -284,7 +284,7 @@ export default function ResidentPortal() {
       <section className="py-6 max-w-7xl mx-auto px-4">
         <h2 className="font-heading text-lg font-bold mb-4">Digital Resident ID</h2>
         <div className="max-w-sm">
-          <ResidentIDCard resident={resident} />
+          <ResidentIDCard resident={resident} showActions={false} />
         </div>
       </section>
 
@@ -390,7 +390,7 @@ export default function ResidentPortal() {
       <Dialog open={idCardOpen} onOpenChange={setIdCardOpen}>
         <DialogContent className="max-w-md">
           <DialogHeader><DialogTitle>Your Resident ID</DialogTitle></DialogHeader>
-          <ResidentIDCard resident={resident} />
+          <ResidentIDCard resident={resident} showActions={false} />
         </DialogContent>
       </Dialog>
 
