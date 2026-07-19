@@ -11,7 +11,6 @@ export default function ResidentIDCard({ resident, showActions = true }) {
 
   const verifyUrl = `${window.location.origin}/verify?resident_id=${encodeURIComponent(resident.resident_id || "")}`;
   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(verifyUrl)}`;
-  const barcodeUrl = `https://barcode.tec-it.com/barcode.ashx?data=${encodeURIComponent(resident.resident_id || "")}&code=Code128`;
 
   const handleDownload = async () => {
     try {
@@ -60,9 +59,9 @@ export default function ResidentIDCard({ resident, showActions = true }) {
         <div className="p-4 flex gap-4">
           <div className="shrink-0">
             {resident.photo_url ? (
-              <img src={resident.photo_url} alt={resident.full_name} crossOrigin="anonymous" className="w-20 h-24 rounded-lg object-cover border-2 border-border" />
+              <img src={resident.photo_url} alt={resident.full_name} crossOrigin="anonymous" className="w-20 h-20 rounded-lg object-cover border-2 border-border" />
             ) : (
-              <div className="w-20 h-24 rounded-lg bg-muted flex items-center justify-center border-2 border-border">
+              <div className="w-20 h-20 rounded-lg bg-muted flex items-center justify-center border-2 border-border">
                 <User className="w-8 h-8 text-muted-foreground" />
               </div>
             )}
@@ -96,8 +95,7 @@ export default function ResidentIDCard({ resident, showActions = true }) {
         {/* Footer */}
         <div className="px-4 py-3 border-t border-border flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <img src={qrUrl} alt="QR Code" crossOrigin="anonymous" className="w-12 h-12" />
-            <img src={barcodeUrl} alt="Barcode" crossOrigin="anonymous" className="h-8" />
+            <img src={qrUrl} alt="QR Code" crossOrigin="anonymous" className="w-14 h-14" />
           </div>
           <div className="text-right text-[10px]">
             <p className="text-muted-foreground">Registered</p>
