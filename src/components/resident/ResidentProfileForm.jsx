@@ -99,7 +99,15 @@ export default function ResidentProfileForm({ user, existing, onSaved }) {
       } else {
         const year = new Date().getFullYear();
         const residents = await base44.entities.Resident.list("-created_date", 1000);
-        data.resident_id = `SV-${year}-${String(residents.length + 1).padStart(8, "0")}`;
+        const prefix = `SV-${year}-`;
+        let maxNum = 0;
+        residents.forEach((r) => {
+          if (r.resident_id && r.resident_id.startsWith(prefix)) {
+            const num = parseInt(r.resident_id.slice(prefix.length), 10);
+            if (!isNaN(num) && num > maxNum) maxNum = num;
+          }
+        });
+        data.resident_id = `${prefix}${String(maxNum + 1).padStart(8, "0")}`;
         await base44.entities.Resident.create(data);
         toast({ title: "Profile created!", description: `Resident ID: ${data.resident_id}` });
       }
