@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import MobileSelect from "@/components/ui/MobileSelect";
-import { Upload, Save, Loader2 } from "lucide-react";
+import { Upload, Save, Loader2, LogOut } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { useNavigate } from "react-router-dom";
 
 const GENDER_OPTIONS = [
   { value: "Male", label: "Male" },
@@ -33,8 +34,14 @@ function computeAge(birthDate) {
 
 export default function ResidentProfileForm({ user, existing, onSaved }) {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
+
+  const handleLogout = async () => {
+    await base44.auth.logout();
+    window.location.href = "/login";
+  };
 
   const [form, setForm] = useState({
     first_name: existing?.first_name || "",
@@ -218,6 +225,10 @@ export default function ResidentProfileForm({ user, existing, onSaved }) {
       <Button type="submit" className="w-full gap-2" disabled={saving || uploading}>
         {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
         {saving ? "Saving..." : existing ? "Update Profile" : "Create Profile"}
+      </Button>
+
+      <Button type="button" variant="outline" className="w-full gap-2" onClick={handleLogout}>
+        <LogOut className="w-4 h-4" /> Logout
       </Button>
     </form>
   );
