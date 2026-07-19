@@ -29,7 +29,7 @@ export default function HeroBanner() {
       <img
         src={PATRON_SAIN_IMG}
         alt="Patron Saint"
-        className="absolute left-4 sm:left-8 lg:left-16 top-8 sm:top-10 lg:top-12 w-48 sm:w-56 lg:w-72 opacity-25 pointer-events-none z-0"
+        className="absolute left-4 sm:left-8 lg:left-16 top-2 sm:top-4 lg:top-6 w-48 sm:w-56 lg:w-72 opacity-50 pointer-events-none z-0"
       />
 
       <div className="relative max-w-7xl mx-auto px-4 py-16 sm:py-20 lg:py-24 w-full">
