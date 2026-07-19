@@ -20,8 +20,8 @@ export default function HeroBanner() {
       {/* Background Image + Overlays */}
       <div className="absolute inset-0">
         <img src={heroPhoto} alt="Barangay San Vicente" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/80 to-primary/50" />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-primary/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary/70 via-transparent to-transparent" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 py-16 sm:py-20 lg:py-24 w-full">
