@@ -8,16 +8,19 @@ const SESSION_ID = "session_" + Math.random().toString(36).substr(2, 9);
 
 function useDraggable() {
   const [pos, setPos] = useState(null);
-  const dragRef = useRef({ dragging: false, offsetX: 0, offsetY: 0 });
+  const dragRef = useRef({ dragging: false, moved: false, startX: 0, startY: 0, offsetX: 0, offsetY: 0 });
 
   const onPointerDown = useCallback((e) => {
     const rect = e.currentTarget.parentElement.getBoundingClientRect();
-    dragRef.current = { dragging: true, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top };
+    dragRef.current = { dragging: true, moved: false, startX: e.clientX, startY: e.clientY, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top };
     e.currentTarget.setPointerCapture(e.pointerId);
   }, []);
 
   const onPointerMove = useCallback((e) => {
     if (!dragRef.current.dragging) return;
+    const dx = Math.abs(e.clientX - dragRef.current.startX);
+    const dy = Math.abs(e.clientY - dragRef.current.startY);
+    if (dx > 4 || dy > 4) dragRef.current.moved = true;
     const x = e.clientX - dragRef.current.offsetX;
     const y = e.clientY - dragRef.current.offsetY;
     const clampedX = Math.max(0, Math.min(x, window.innerWidth - 56));
@@ -30,7 +33,9 @@ function useDraggable() {
     try { e.currentTarget.releasePointerCapture(e.pointerId); } catch {}
   }, []);
 
-  return { pos, onPointerDown, onPointerMove, onPointerUp };
+  const wasDragged = useCallback(() => dragRef.current.moved, []);
+
+  return { pos, onPointerDown, onPointerMove, onPointerUp, wasDragged };
 }
 
 const SYSTEM_PROMPT = `Ikaw si "VINCE" (Virtual Intelligence for the Community of San Vicente), ang opisyal nga virtual assistant sa Barangay San Vicente, Olango Island.
@@ -69,7 +74,7 @@ export default function ChatWidget() {
   const [kb, setKb] = useState([]);
   const [announcements, setAnnouncements] = useState([]);
   const bottomRef = useRef(null);
-  const { pos, onPointerDown, onPointerMove, onPointerUp } = useDraggable();
+  const { pos, onPointerDown, onPointerMove, onPointerUp, wasDragged } = useDraggable();
 
   const positionStyle = pos
     ? { left: pos.x, top: pos.y, right: "auto", bottom: "auto" }
@@ -145,7 +150,7 @@ Assistant (tubaga sa Bisaya):`;
   if (!open) {
     return (
       <button
-        onClick={() => setOpen(true)}
+        onClick={() => { if (!wasDragged()) setOpen(true); }}
         {...dragProps}
         style={{ ...dragProps.style, ...positionStyle }}
         className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-primary text-white shadow-2xl flex items-center justify-center hover:scale-110 transition-transform"
