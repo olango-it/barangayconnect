@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { User, Download, Printer } from "lucide-react";
 
-const BARANGAY_LOGO = "https://media.base44.com/images/public/6a1d00c12929ea8d18f9682c/18bf23381_272142171_135339558948283_9205934589195432511_n.jpg";
+const BARANGAY_LOGO = "https://media.base44.com/images/public/6a1d00c12929ea8d18f9682c/fb119da1d_sanvicentelogo.png";
 const LAPU_LAPU_SEAL = "https://media.base44.com/images/public/6a1d00c12929ea8d18f9682c/c4de232ea_LLC.png";
 import { format } from "date-fns";
 import { useToast } from "@/components/ui/use-toast";
