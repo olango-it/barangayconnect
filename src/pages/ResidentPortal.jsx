@@ -62,7 +62,23 @@ export default function ResidentPortal() {
     queryKey: ["my-resident-profile", user?.id],
     queryFn: async () => {
       const results = await base44.entities.Resident.filter({ created_by_id: user.id });
-      return results[0] || null;
+      const r = results[0] || null;
+      if (r && !r.resident_id) {
+        const year = new Date().getFullYear();
+        const prefix = `SV-${year}-`;
+        const all = await base44.entities.Resident.list("-created_date", 1000);
+        let maxNum = 0;
+        all.forEach((x) => {
+          if (x.resident_id && x.resident_id.startsWith(prefix)) {
+            const num = parseInt(x.resident_id.slice(prefix.length), 10);
+            if (!isNaN(num) && num > maxNum) maxNum = num;
+          }
+        });
+        const newId = `${prefix}${String(maxNum + 1).padStart(8, "0")}`;
+        await base44.entities.Resident.update(r.id, { resident_id: newId });
+        r.resident_id = newId;
+      }
+      return r;
     },
     enabled: !!user,
   });
