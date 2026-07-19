@@ -92,7 +92,7 @@ export default function ResidentProfileForm({ user, existing, onSaved }) {
       } else {
         const year = new Date().getFullYear();
         const residents = await base44.entities.Resident.list("-created_date", 1000);
-        data.resident_id = `BRGY-${year}-${String(residents.length + 1).padStart(6, "0")}`;
+        data.resident_id = `SV-${year}-${String(residents.length + 1).padStart(8, "0")}`;
         await base44.entities.Resident.create(data);
         toast({ title: "Profile created!", description: `Resident ID: ${data.resident_id}` });
       }
