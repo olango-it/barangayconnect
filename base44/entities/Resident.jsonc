@@ -4,7 +4,7 @@
   "properties": {
     "resident_id": {
       "type": "string",
-      "description": "Unique resident ID (e.g., BRGY-2026-000001)"
+      "description": "Unique resident ID (e.g., SV-2026-00000001)"
     },
     "full_name": {
       "type": "string",
@@ -125,28 +125,7 @@
   ],
   "rls": {
     "create": true,
-    "read": {
-      "$or": [
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "super_admin"
-          }
-        },
-        {
-          "user_condition": {
-            "role": "records_officer"
-          }
-        },
-        {
-          "created_by_id": "{{user.id}}"
-        }
-      ]
-    },
+    "read": {},
     "update": {
       "$or": [
         {
