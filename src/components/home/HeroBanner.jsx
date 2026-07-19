@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 
 const DEFAULT_HERO = "https://media.base44.com/images/public/6a1d00c12929ea8d18f9682c/51e2c6f70_losbanoshall.jpg";
+const PATRON_SAIN_IMG = "https://media.base44.com/images/public/6a1d00c12929ea8d18f9682c/611e02e16_images-removebg-preview.png";
 
 export default function HeroBanner() {
   const { data: settings = [] } = useQuery({
@@ -23,6 +24,13 @@ export default function HeroBanner() {
         <div className="absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/50 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-primary/70 via-transparent to-transparent" />
       </div>
+
+      {/* Patron Saint Image - behind text, left side */}
+      <img
+        src={PATRON_SAIN_IMG}
+        alt="Patron Saint"
+        className="absolute left-4 sm:left-8 lg:left-16 top-1/2 -translate-y-1/2 w-48 sm:w-56 lg:w-72 opacity-25 pointer-events-none z-0"
+      />
 
       <div className="relative max-w-7xl mx-auto px-4 py-16 sm:py-20 lg:py-24 w-full">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
