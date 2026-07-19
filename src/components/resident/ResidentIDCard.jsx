@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { User, Download, Printer } from "lucide-react";
 
 const BARANGAY_LOGO = "https://media.base44.com/images/public/6a1d00c12929ea8d18f9682c/18bf23381_272142171_135339558948283_9205934589195432511_n.jpg";
+const LAPU_LAPU_SEAL = "https://media.base44.com/images/public/6a1d00c12929ea8d18f9682c/c4de232ea_LLC.png";
 import { format } from "date-fns";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -47,13 +48,18 @@ export default function ResidentIDCard({ resident, showActions = true }) {
     <div>
       <div ref={cardRef} className="bg-white rounded-2xl overflow-hidden shadow-xl border border-border w-full max-w-sm mx-auto">
         {/* Header */}
-        <div className="bg-primary text-primary-foreground px-4 py-3 flex flex-col items-center justify-center gap-1 text-center">
-          <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center shrink-0 overflow-hidden">
-            <img src={BARANGAY_LOGO} alt="Barangay Logo" crossOrigin="anonymous" className="w-15 h-15 object-contain mix-blend-multiply" />
+        <div className="bg-primary text-primary-foreground px-4 py-3 relative flex items-center justify-between gap-2">
+          <div className="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center shrink-0 overflow-hidden">
+            <img src={BARANGAY_LOGO} alt="Barangay Logo" crossOrigin="anonymous" className="w-13 h-13 object-contain mix-blend-multiply" />
           </div>
-          <div>
+          <div className="flex-1 text-center min-w-0">
+            <p className="text-[8px] opacity-75 leading-tight uppercase tracking-wide">Republic of the Philippines</p>
+            <p className="text-[9px] opacity-90 leading-tight">City of Lapu-Lapu</p>
             <h3 className="font-heading font-bold text-sm leading-tight">Barangay San Vicente</h3>
-            <p className="text-[10px] opacity-80">Official Resident ID Card</p>
+            <p className="text-[10px] opacity-80 leading-tight">Resident Digital ID</p>
+          </div>
+          <div className="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center shrink-0 overflow-hidden">
+            <img src={LAPU_LAPU_SEAL} alt="Lapu-Lapu City Seal" crossOrigin="anonymous" className="w-13 h-13 object-contain" />
           </div>
         </div>
 
