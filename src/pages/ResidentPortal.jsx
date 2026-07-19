@@ -17,6 +17,7 @@ import PullToRefreshIndicator from "@/components/PullToRefreshIndicator";
 import ChatWidget from "@/components/chatbot/ChatWidget";
 import ResidentIDCard from "@/components/resident/ResidentIDCard";
 import ResidentProfileForm from "@/components/resident/ResidentProfileForm";
+import PrivacyTermsSection from "@/components/resident/PrivacyTermsSection";
 
 const docTypes = [
   "Barangay Clearance", "Certificate of Residency", "Certificate of Indigency",
@@ -349,6 +350,9 @@ export default function ResidentPortal() {
           </div>
         </section>
       )}
+
+      {/* Legal & Privacy */}
+      <PrivacyTermsSection />
 
       {/* Settings */}
       <section className="py-6 max-w-7xl mx-auto px-4">
