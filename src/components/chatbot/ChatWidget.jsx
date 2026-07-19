@@ -181,7 +181,7 @@ Assistant (tubaga sa Bisaya):`;
             </div>
           </div>
         </div>
-        <div className="flex gap-1">
+        <div className="flex gap-1" onPointerDown={(e) => e.stopPropagation()}>
           <button onClick={() => setMinimized(!minimized)} className="p-1 rounded hover:bg-white/20"><Minus className="w-4 h-4" /></button>
           <button onClick={() => setOpen(false)} className="p-1 rounded hover:bg-white/20"><X className="w-4 h-4" /></button>
         </div>
