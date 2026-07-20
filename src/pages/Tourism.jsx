@@ -4,6 +4,7 @@ import { Sun, MapPin, Clock, Tag, Lightbulb, X } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import VirtualMap from "@/components/tourism/VirtualMap";
 
 export default function Tourism() {
   const { data: spots = [], isLoading } = useQuery({
@@ -78,6 +79,9 @@ export default function Tourism() {
           </div>
         )}
       </section>
+
+      {/* Virtual Map */}
+      <VirtualMap />
 
       {/* Getting There */}
       <section className="py-16 bg-muted/50">
