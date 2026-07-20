@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 
-const VIRTUAL_MAP_URL = "https://virtualmap.sanvicente-official.com";
+const VIRTUAL_MAP_URL = "https://sanvicentevirtualmap.olangoit.workers.dev/";
 
 export default function Tourism() {
   const { data: spots = [], isLoading } = useQuery({
@@ -206,7 +206,7 @@ export default function Tourism() {
             <div className="flex items-center justify-between px-4 py-3 border-b bg-muted/50">
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Map className="w-4 h-4" />
-                <span>virtualmap.sanvicente-official.com</span>
+                <span>San Vicente Virtual Map</span>
               </div>
               <a
                 href={VIRTUAL_MAP_URL}
