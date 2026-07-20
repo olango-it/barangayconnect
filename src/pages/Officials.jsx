@@ -78,9 +78,9 @@ export default function Officials() {
             {/* SK Officials */}
             {officials.some((o) => o.position?.toLowerCase().includes("sk")) && (
               <div>
-                <div className="text-center mb-8">
-                  <h2 className="font-heading text-2xl font-bold text-primary">Sangguniang Kabataan (SK) Officials</h2>
-                  <p className="text-sm text-muted-foreground mt-1">Youth leaders of Barangay San Vicente</p>
+                <div className="bg-primary text-primary-foreground py-16 -mx-4 px-4 text-center mb-8">
+                  <h2 className="font-heading text-3xl sm:text-4xl font-bold mb-3">Sangguniang Kabataan (SK) Officials</h2>
+                  <p className="opacity-80">The youth leaders serving Barangay San Vicente</p>
                 </div>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                   {officials.filter((o) => o.position?.toLowerCase().includes("sk")).map((official, i) => (
