@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 
-const VIRTUAL_MAP_URL = "http://virtualmap.sanvicente-official.com";
+const VIRTUAL_MAP_URL = "https://virtualmap.sanvicente-official.com";
 
 export default function Tourism() {
   const { data: spots = [], isLoading } = useQuery({
