@@ -28,47 +28,104 @@ export default function Officials() {
             <p>Official profiles will be displayed here.</p>
           </div>
         ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {officials.map((official, i) => (
-              <motion.div
-                key={official.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.05 }}
-                viewport={{ once: true }}
-                className="bg-card rounded-2xl border overflow-hidden hover:shadow-lg transition-shadow group"
-              >
-                <div
-                  className="h-56 bg-muted flex items-center justify-center overflow-hidden cursor-pointer"
-                  onClick={() => setSelected(official)}
-                >
-                  {official.photo_url ? (
-                    <img
-                      src={official.photo_url}
-                      alt={official.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  ) : (
-                    <User className="w-16 h-16 text-muted-foreground/30" />
-                  )}
+          <>
+            {/* Barangay Officials */}
+            <div className="mb-12">
+              <h2 className="font-heading text-2xl font-bold text-center mb-8 text-primary">Barangay Officials</h2>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {officials.filter((o) => !o.position?.toLowerCase().includes("sk")).map((official, i) => (
+                  <motion.div
+                    key={official.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                    viewport={{ once: true }}
+                    className="bg-card rounded-2xl border overflow-hidden hover:shadow-lg transition-shadow group"
+                  >
+                    <div
+                      className="h-56 bg-muted flex items-center justify-center overflow-hidden cursor-pointer"
+                      onClick={() => setSelected(official)}
+                    >
+                      {official.photo_url ? (
+                        <img
+                          src={official.photo_url}
+                          alt={official.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      ) : (
+                        <User className="w-16 h-16 text-muted-foreground/30" />
+                      )}
+                    </div>
+                    <div className="p-5">
+                      <p className="text-xs text-secondary font-semibold uppercase tracking-wider mb-1">
+                        {official.position}
+                      </p>
+                      <h3 className="font-heading text-lg font-bold mb-2">{official.name}</h3>
+                      {official.biography && (
+                        <p className="text-xs text-muted-foreground line-clamp-3 mb-3">{official.biography}</p>
+                      )}
+                      {official.contact_info && (
+                        <p className="text-xs text-muted-foreground flex items-center gap-1">
+                          <Phone className="w-3 h-3" /> {official.contact_info}
+                        </p>
+                      )}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* SK Officials */}
+            {officials.some((o) => o.position?.toLowerCase().includes("sk")) && (
+              <div>
+                <div className="text-center mb-8">
+                  <h2 className="font-heading text-2xl font-bold text-primary">Sangguniang Kabataan (SK) Officials</h2>
+                  <p className="text-sm text-muted-foreground mt-1">Youth leaders of Barangay San Vicente</p>
                 </div>
-                <div className="p-5">
-                  <p className="text-xs text-secondary font-semibold uppercase tracking-wider mb-1">
-                    {official.position}
-                  </p>
-                  <h3 className="font-heading text-lg font-bold mb-2">{official.name}</h3>
-                  {official.biography && (
-                    <p className="text-xs text-muted-foreground line-clamp-3 mb-3">{official.biography}</p>
-                  )}
-                  {official.contact_info && (
-                    <p className="text-xs text-muted-foreground flex items-center gap-1">
-                      <Phone className="w-3 h-3" /> {official.contact_info}
-                    </p>
-                  )}
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {officials.filter((o) => o.position?.toLowerCase().includes("sk")).map((official, i) => (
+                    <motion.div
+                      key={official.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.05 }}
+                      viewport={{ once: true }}
+                      className="bg-card rounded-2xl border overflow-hidden hover:shadow-lg transition-shadow group"
+                    >
+                      <div
+                        className="h-56 bg-muted flex items-center justify-center overflow-hidden cursor-pointer"
+                        onClick={() => setSelected(official)}
+                      >
+                        {official.photo_url ? (
+                          <img
+                            src={official.photo_url}
+                            alt={official.name}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                        ) : (
+                          <User className="w-16 h-16 text-muted-foreground/30" />
+                        )}
+                      </div>
+                      <div className="p-5">
+                        <p className="text-xs text-secondary font-semibold uppercase tracking-wider mb-1">
+                          {official.position}
+                        </p>
+                        <h3 className="font-heading text-lg font-bold mb-2">{official.name}</h3>
+                        {official.biography && (
+                          <p className="text-xs text-muted-foreground line-clamp-3 mb-3">{official.biography}</p>
+                        )}
+                        {official.contact_info && (
+                          <p className="text-xs text-muted-foreground flex items-center gap-1">
+                            <Phone className="w-3 h-3" /> {official.contact_info}
+                          </p>
+                        )}
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
-              </motion.div>
-            ))}
-          </div>
+              </div>
+            )}
+          </>
         )}
       </section>
 
