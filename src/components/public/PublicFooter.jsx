@@ -115,7 +115,7 @@ export default function PublicFooter() {
               <Send className="w-4 h-4" />
             </a>
           </div>
-          <p className="mt-1 sm:mt-0">Developed by IslandTech Solutions Inc.</p>
+          <p className="mt-1 sm:mt-0">Developed by <a href="https://islandtechsolutions.rf.gd/" target="_blank" rel="noopener noreferrer" className="hover:underline hover:opacity-100">Island Tech Solutions</a></p>
         </div>
       </div>
     </footer>
